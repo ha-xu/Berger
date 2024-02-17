@@ -1,4 +1,6 @@
 package view;
+import model.Rancher;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,8 +9,11 @@ public class GamePanel extends JPanel{
     private Image wolfImage;
     private Image sheepImage;
 
+    private final Rancher rancher;
 
-    public GamePanel(){
+    public GamePanel(Rancher rancher){
+
+        this.rancher = rancher;
         //log
         System.out.println("GamePanel");
         //set size
@@ -31,8 +36,6 @@ public class GamePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(rancherImage, 12, 12, this);
-        //log
-        System.out.println("paintComponent");
+        g.drawImage(rancherImage, rancher.getPosition().getX(), rancher.getPosition().getY(), this);
     }
 }

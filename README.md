@@ -1,1 +1,1 @@
-Hello, welcome to the game 'Farmer'!
+Hello, welcome to the game 'Rancher'!

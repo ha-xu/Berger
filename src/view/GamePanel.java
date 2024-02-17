@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel{
-    private final Image farmerImage;
+    private final Image rancherImage;
     private Image wolfImage;
     private Image sheepImage;
 
@@ -18,7 +18,7 @@ public class GamePanel extends JPanel{
 
         //set image
         ImageIcon icon = new ImageIcon("src/images/farmerImage.png");
-        farmerImage = icon.getImage();
+        rancherImage = icon.getImage();
 
 
         //set background color
@@ -31,7 +31,7 @@ public class GamePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(farmerImage, 12, 12, this);
+        g.drawImage(rancherImage, 12, 12, this);
         //log
         System.out.println("paintComponent");
     }

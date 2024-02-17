@@ -8,7 +8,7 @@ public class Main {
     private static final JFrame frame = new GameFrame();
 
     private static void GameStart() {
-        System.out.print("Farmer start!");
+        System.out.print("Rancher start!");
 
 
         InputManager inputManager = new InputManager();

@@ -2,7 +2,7 @@ package model;
 
 public class RancherMove extends Thread{
     private final Rancher rancher;
-    private final int Interval = 30;
+    private final int Interval = 10;
     private boolean isRunning = true;
 
     public RancherMove(Rancher rancher){

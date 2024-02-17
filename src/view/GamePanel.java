@@ -17,8 +17,8 @@ public class GamePanel extends JPanel{
         //log
         System.out.println("GamePanel");
         //set size
-        this.setSize(GameFrame.WIDTH, GameFrame.HEIGHT);
-        this.setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
+//        this.setSize(GameFrame.HEIGHT, GameFrame.HEIGHT);
+        this.setPreferredSize(new Dimension(GameFrame.HEIGHT, GameFrame.HEIGHT));
         this.setVisible(true);
 
         //set image

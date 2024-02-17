@@ -1,7 +1,7 @@
 package model;
 
 public abstract class Character {
-    private int speed = 3;
+    private int speed = 1;
     private final Position position;
 
     private boolean isMovingUp = false;

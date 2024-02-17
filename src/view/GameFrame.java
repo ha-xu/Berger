@@ -11,6 +11,8 @@ public class GameFrame extends JFrame{
     public GameFrame(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
+//        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.setResizable(false);
         this.setVisible(true);
 
         //set title

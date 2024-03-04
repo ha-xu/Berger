@@ -1,5 +1,6 @@
 import input.InputManager;
-import model.*;
+import model.GameObjects.Ranch;
+import model.Threads.RancherMove;
 import view.*;
 
 import java.awt.*;

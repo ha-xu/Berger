@@ -1,4 +1,6 @@
-package model;
+package model.GameObjects;
+
+import model.Position;
 
 public class Wool {
     private final Position position;

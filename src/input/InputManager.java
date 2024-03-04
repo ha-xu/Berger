@@ -1,7 +1,7 @@
 package input;
 
 import model.Direction;
-import model.Rancher;
+import model.GameObjects.Rancher;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

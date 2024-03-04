@@ -1,6 +1,7 @@
 package view;
-import model.Ranch;
-import model.Sheep;
+import model.GameObjects.Ranch;
+import model.GameObjects.Sheep;
+import model.GameObjects.Wool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +54,7 @@ public class GamePanel extends JPanel{
             g.drawImage(sheepImage, sheep.getPosition().getX(), sheep.getPosition().getY(), this);
         }
 
-        for (model.Wool wool : ranch.getWools()) {
+        for (Wool wool : ranch.getWools()) {
             g.drawImage(woolImage, wool.getPosition().getX(), wool.getPosition().getY(), this);
         }
 

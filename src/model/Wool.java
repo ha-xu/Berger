@@ -1,7 +1,7 @@
 package model;
 
 public class Wool {
-    private Position position;
+    private final Position position;
 
     public Wool(Position position) {
         this.position = position;

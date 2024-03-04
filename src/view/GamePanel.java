@@ -1,18 +1,16 @@
 package view;
 import model.Ranch;
-import model.Rancher;
 import model.Sheep;
-import model.Wolf;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel{
     private final Image rancherImage;
-    private Image wolfImage;
-    private Image sheepImage;
+    private final Image wolfImage;
+    private final Image sheepImage;
 
-    private Image woolImage;
+    private final Image woolImage;
 
     private final Ranch ranch;
 
@@ -51,7 +49,7 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
         g.drawImage(rancherImage, ranch.getRancher().getPosition().getX(), ranch.getRancher().getPosition().getY(), this);
         g.drawImage(wolfImage, ranch.getWolf().getPosition().getX(), ranch.getWolf().getPosition().getY(), this);
-        for (Sheep sheep : ranch.getSheeps()) {
+        for (Sheep sheep : ranch.getSheepFlock()) {
             g.drawImage(sheepImage, sheep.getPosition().getX(), sheep.getPosition().getY(), this);
         }
 

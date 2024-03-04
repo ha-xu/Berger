@@ -1,7 +1,5 @@
 import input.InputManager;
-import model.Position;
-import model.Rancher;
-import model.RancherMove;
+import model.*;
 import view.*;
 
 import java.awt.*;
@@ -13,12 +11,13 @@ public class Main {
     private static void GameStart() {
         System.out.print("Rancher start!");
 
-        Rancher rancher = new Rancher(new Position(0, 0));
-        InputManager inputManager = new InputManager(rancher);
-        Redessine redessine = new Redessine(frame);
-        RancherMove rancherMove = new RancherMove(rancher);
+        Ranch ranch = new Ranch();
 
-        GamePanel panel = new GamePanel(rancher);
+        InputManager inputManager = new InputManager(ranch.getRancher());
+        Redessine redessine = new Redessine(frame);
+        RancherMove rancherMove = new RancherMove(ranch.getRancher());
+
+        GamePanel panel = new GamePanel(ranch);
         GameUIPanel uiPanel = new GameUIPanel();
 
         redessine.start();

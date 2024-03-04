@@ -1,5 +1,8 @@
 package view;
+import model.Ranch;
 import model.Rancher;
+import model.Sheep;
+import model.Wolf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +12,13 @@ public class GamePanel extends JPanel{
     private Image wolfImage;
     private Image sheepImage;
 
-    private final Rancher rancher;
+    private Image woolImage;
 
-    public GamePanel(Rancher rancher){
+    private final Ranch ranch;
 
-        this.rancher = rancher;
+    public GamePanel(Ranch ranch){
+        this.ranch = ranch;
+
         //log
         System.out.println("GamePanel");
         //set size
@@ -22,9 +27,17 @@ public class GamePanel extends JPanel{
         this.setVisible(true);
 
         //set image
-        ImageIcon icon = new ImageIcon("src/images/farmerImage.png");
-        rancherImage = icon.getImage();
+        ImageIcon rancherIcon = new ImageIcon("src/images/farmerImage.png");
+        rancherImage = rancherIcon.getImage();
 
+        ImageIcon sheepIcon = new ImageIcon("src/images/sheepImage.png");
+        sheepImage = sheepIcon.getImage();
+
+        ImageIcon wolfIcon = new ImageIcon("src/images/wolfImage.png");
+        wolfImage = wolfIcon.getImage();
+
+        ImageIcon woolIcon = new ImageIcon("src/images/woolImage.png");
+        woolImage = woolIcon.getImage();
 
         //set background color
         float [] hsb = new float[3];
@@ -36,6 +49,15 @@ public class GamePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(rancherImage, rancher.getPosition().getX(), rancher.getPosition().getY(), this);
+        g.drawImage(rancherImage, ranch.getRancher().getPosition().getX(), ranch.getRancher().getPosition().getY(), this);
+        g.drawImage(wolfImage, ranch.getWolf().getPosition().getX(), ranch.getWolf().getPosition().getY(), this);
+        for (Sheep sheep : ranch.getSheeps()) {
+            g.drawImage(sheepImage, sheep.getPosition().getX(), sheep.getPosition().getY(), this);
+        }
+
+        for (model.Wool wool : ranch.getWools()) {
+            g.drawImage(woolImage, wool.getPosition().getX(), wool.getPosition().getY(), this);
+        }
+
     }
 }

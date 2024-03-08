@@ -22,43 +22,11 @@ public class InputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println("keyPressed：" + KeyEvent.getKeyText(e.getKeyCode()));
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP: case KeyEvent.VK_W:
-                rancher.SetMoveDirection(Direction.UP);
-                break;
-            case KeyEvent.VK_DOWN: case KeyEvent.VK_S:
-                rancher.SetMoveDirection(Direction.DOWN);
-                break;
-            case KeyEvent.VK_LEFT: case KeyEvent.VK_A:
-                rancher.SetMoveDirection(Direction.LEFT);
-                break;
-            case KeyEvent.VK_RIGHT: case KeyEvent.VK_D:
-                rancher.SetMoveDirection(Direction.RIGHT);
-                break;
-
-            case KeyEvent.VK_E:
-                rancher.collectWool();
-                break;
-        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         System.out.println("keyReleased：" + KeyEvent.getKeyText(e.getKeyCode()));
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP: case KeyEvent.VK_W:
-                rancher.StopMoveDirection(Direction.UP);
-                break;
-            case KeyEvent.VK_DOWN: case KeyEvent.VK_S:
-                rancher.StopMoveDirection(Direction.DOWN);
-                break;
-            case KeyEvent.VK_LEFT: case KeyEvent.VK_A:
-                rancher.StopMoveDirection(Direction.LEFT);
-                break;
-            case KeyEvent.VK_RIGHT: case KeyEvent.VK_D:
-                rancher.StopMoveDirection(Direction.RIGHT);
-                break;
-        }
     }
 
 

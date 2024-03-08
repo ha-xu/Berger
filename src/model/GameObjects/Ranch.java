@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Ranch {
 
-    public final int WIDTH = 500;
-    public final int HEIGHT = 500;
+    public final int WIDTH = 1000;
+    public final int HEIGHT = 1000;
 
     private int money = 0; //the money of the rancher
     private int maxSheep = 3; //the maximum number of sheep
@@ -22,11 +22,11 @@ public class Ranch {
     ArrayList<Grass> grasses = new ArrayList<>();
 
     public Ranch() {
-        rancher = new Rancher(new Position(50, 50), this);
-        wolf = new Wolf(new Position(200, 60));
-        sheepFlock.add(new Sheep(new Position(150, 160)));
-        sheepFlock.add(new Sheep(new Position(470, 155)));
-        sheepFlock.add(new Sheep(new Position(170, 380)));
+        rancher = new Rancher(new Position(50, 50), 3, this);
+        wolf = new Wolf(new Position(200, 60), this);
+        sheepFlock.add(new Sheep(new Position(150, 160), 1, this));
+        sheepFlock.add(new Sheep(new Position(470, 155),1, this));
+        sheepFlock.add(new Sheep(new Position(170, 380),1, this));
 
         wools.add(new Wool(new Position(190, 310)));
     }

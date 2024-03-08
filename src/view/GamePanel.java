@@ -35,12 +35,15 @@ public class GamePanel extends JPanel{
 
         sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
         //TODO: set sheep icon size
+        sheepImageIcon.setImage(sheepImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Sheep.WIDTH), RanchLengthToPanelLength(Sheep.HEIGHT), Image.SCALE_DEFAULT));
 
         wolfImageIcon = new ImageIcon("src/images/wolfImage.png");
         //TODO: wolf sheep icon size
+        wolfImageIcon.setImage(wolfImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
         woolImageIcon = new ImageIcon("src/images/woolImage.png");
         //TODO: set wool icon size
+        woolImageIcon.setImage(woolImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Wool.WIDTH), RanchLengthToPanelLength(Wool.HEIGHT), Image.SCALE_DEFAULT));
 
         //set background color
         float [] hsb = new float[3];

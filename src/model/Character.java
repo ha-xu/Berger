@@ -14,7 +14,10 @@ public abstract class Character {
     public Character(Position position) {
         this.position = position;
     }
-
+    public Character(Position position, int speed) {
+        this.position = position;
+        this.speed = speed;
+    }
     public Position getPosition() {
         return position;
     }

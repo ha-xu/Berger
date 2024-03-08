@@ -5,14 +5,19 @@ import model.Direction;
 import model.Position;
 
 public class Rancher extends Character {
-    public static final int WIDTH = 40;
-    public static final int HEIGHT = 40;
-    public final int collectWoolRange = 50;
+    public static final int WIDTH = 70;
+    public static final int HEIGHT = 70;
+    public final int collectWoolRange = 80;
 
 
     private final Ranch ranch;
     public Rancher(Position position, Ranch ranch){
         super(position);
+        this.ranch = ranch;
+    }
+
+    public Rancher(Position position, int speed, Ranch ranch){
+        super(position, speed);
         this.ranch = ranch;
     }
 

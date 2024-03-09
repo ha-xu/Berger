@@ -1,6 +1,7 @@
 import input.InputManager;
 import model.GameObjects.Ranch;
 import model.Threads.RancherMove;
+import model.Threads.UIAnimation;
 import view.*;
 
 import java.awt.*;
@@ -18,11 +19,14 @@ public class Main {
         Redessine redessine = new Redessine(frame);
         RancherMove rancherMove = new RancherMove(ranch.getRancher());
 
+
         GamePanel panel = new GamePanel(ranch);
-        GameUIPanel uiPanel = new GameUIPanel();
+        GameUIPanel uiPanel = new GameUIPanel(ranch);
+        UIAnimation uiAnimation = new UIAnimation(uiPanel);
 
         redessine.start();
         rancherMove.start();
+        uiAnimation.start();
 
         frame.setLayout(new FlowLayout()); // 1行2列
 

@@ -16,7 +16,7 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
 
         //set title
-        this.setTitle("Farmer");
+        this.setTitle("Rancher");
     }
 
 }

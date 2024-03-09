@@ -1,19 +1,20 @@
-package model;
+package model.Threads;
 
-public class RancherMove extends Thread{
-    private final Rancher rancher;
+import model.GameObjects.Sheep;
+
+public class SheepMove extends Thread{
+    private final Sheep sheep;
     private final int Interval = 10;
     private boolean isRunning = true;
 
-    public RancherMove(Rancher rancher){
-        this.rancher = rancher;
+    public SheepMove(Sheep sheep){
+        this.sheep = sheep;
     }
-
     public void run(){
         while(isRunning){
             try{
                 Thread.sleep(Interval);
-                rancher.move();
+                sheep.move();
             }catch(InterruptedException e){
                 e.printStackTrace();
             }

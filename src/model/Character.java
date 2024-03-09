@@ -1,7 +1,9 @@
 package model;
 
 public abstract class Character {
-    private int speed = 1;
+
+
+    private int speed = 2;
     private final Position position;
 
     private boolean isMovingUp = false;
@@ -56,6 +58,13 @@ public abstract class Character {
         }
     }
 
+    public void StopAllMoveDirections(){
+        isMovingUp = false;
+        isMovingDown = false;
+        isMovingLeft = false;
+        isMovingRight = false;
+    }
+
     public void move(){
         if(isMovingUp){
             position.setY(position.getY() - speed);
@@ -71,4 +80,14 @@ public abstract class Character {
         }
     }
 
+
+    //calculate the distance between two characters
+    public double distance(Character character){
+        return Math.sqrt(Math.pow(position.getX() - character.getPosition().getX(), 2) + Math.pow(position.getY() - character.getPosition().getY(), 2));
+    }
+
+    //calculate the distance between two positions
+    public double distance(Position position){
+        return Math.sqrt(Math.pow(this.position.getX() - position.getX(), 2) + Math.pow(this.position.getY() - position.getY(), 2));
+    }
 }

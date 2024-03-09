@@ -1,5 +1,6 @@
 import input.InputManager;
-import model.*;
+import model.GameObjects.Ranch;
+import model.Threads.RancherMove;
 import view.*;
 
 import java.awt.*;
@@ -11,23 +12,17 @@ public class Main {
     private static void GameStart() {
         System.out.print("Rancher start!");
 
-        Rancher rancher = new Rancher(new Position(0, 0));
-        /**pour sheep*/
-        Sheep sheep = new Sheep(new Position(100, 100));
-        SheepMove sheepMove = new SheepMove(sheep);
+        Ranch ranch = new Ranch();
 
-        InputManager inputManager = new InputManager(rancher);
+        InputManager inputManager = new InputManager(ranch.getRancher());
         Redessine redessine = new Redessine(frame);
-        RancherMove rancherMove = new RancherMove(rancher);
+        RancherMove rancherMove = new RancherMove(ranch.getRancher());
 
-
-        GamePanel panel = new GamePanel(rancher, sheep);
+        GamePanel panel = new GamePanel(ranch);
         GameUIPanel uiPanel = new GameUIPanel();
 
         redessine.start();
         rancherMove.start();
-        /**sheep*/
-        sheepMove.start();
 
         frame.setLayout(new FlowLayout()); // 1行2列
 

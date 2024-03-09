@@ -33,11 +33,11 @@ public class GamePanel extends JPanel{
         rancherImageIcon.setImage(rancherImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
 
-        sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
+        sheepImageIcon = new ImageIcon("src/images/mouton.png");
         //TODO: set sheep icon size
 
         wolfImageIcon = new ImageIcon("src/images/wolfImage.png");
-        //TODO: wolf sheep icon size
+        //TODO: set wolf icon size
 
         woolImageIcon = new ImageIcon("src/images/woolImage.png");
         //TODO: set wool icon size
@@ -72,15 +72,15 @@ public class GamePanel extends JPanel{
         //draw wolf
         //g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
         //draw sheep
-//        for (Sheep sheep : ranch.getSheepFlock()) {
-//            Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);
-//            g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
-//        }
+        for (Sheep sheep : ranch.getSheepFlock()) {
+            Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);
+            g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
+        }
         //draw wool
-//        for (Wool wool : ranch.getWools()) {
-//            Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
-//            g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
-//        }
+        for (Wool wool : ranch.getWools()) {
+            Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
+            g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
+        }
 
     }
 }

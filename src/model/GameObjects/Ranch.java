@@ -10,7 +10,7 @@ public class Ranch {
     public final int HEIGHT = 500;
 
     private int money = 0; //the money of the rancher
-    private int maxSheep = 3; //the maximum number of sheep
+    private int maxSheep = 30; //the maximum number of sheep
     private int maxWolf = 1; //the maximum number of wolf
 
     Rancher rancher;
@@ -24,9 +24,10 @@ public class Ranch {
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), this);
         wolf = new Wolf(new Position(200, 60));
-        sheepFlock.add(new Sheep(new Position(150, 160)));
-        sheepFlock.add(new Sheep(new Position(470, 155)));
-        sheepFlock.add(new Sheep(new Position(170, 380)));
+        //ajouter d'abord trois moutons
+        sheepFlock.add(new Sheep(new Position(150, 160), this));
+        sheepFlock.add(new Sheep(new Position(470, 155), this));
+        sheepFlock.add(new Sheep(new Position(170, 380), this));
 
         wools.add(new Wool(new Position(190, 310)));
     }

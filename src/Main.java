@@ -1,9 +1,12 @@
 import input.InputManager;
 import model.GameObjects.Ranch;
+import model.GameObjects.Sheep;
 import model.Threads.RancherMove;
+import model.Threads.SheepMove;
 import view.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -18,11 +21,20 @@ public class Main {
         Redessine redessine = new Redessine(frame);
         RancherMove rancherMove = new RancherMove(ranch.getRancher());
 
+        ArrayList<Sheep> sheepFlock = ranch.getSheepFlock();
+        ArrayList<SheepMove> sheepMove = new ArrayList<>();
+        for (Sheep sheep : sheepFlock) {
+            sheepMove.add(new SheepMove(sheep));
+        }
+
         GamePanel panel = new GamePanel(ranch);
         GameUIPanel uiPanel = new GameUIPanel();
 
         redessine.start();
         rancherMove.start();
+        for (SheepMove SM : sheepMove) {
+            SM.start();
+        }
 
         frame.setLayout(new FlowLayout()); // 1行2列
 

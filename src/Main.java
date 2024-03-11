@@ -21,6 +21,7 @@ public class Main {
         Redessine redessine = new Redessine(frame);
         RancherMove rancherMove = new RancherMove(ranch.getRancher());
 
+        //reprendre les moutons et les déplacements des moutons
         ArrayList<Sheep> sheepFlock = ranch.getSheepFlock();
         ArrayList<SheepMove> sheepMove = new ArrayList<>();
         for (Sheep sheep : sheepFlock) {
@@ -32,6 +33,7 @@ public class Main {
 
         redessine.start();
         rancherMove.start();
+        //pour déplacer les moutons
         for (SheepMove SM : sheepMove) {
             SM.start();
         }

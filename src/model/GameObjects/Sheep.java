@@ -48,6 +48,7 @@ public class Sheep extends Character {
     //Méthode de déplacement des moutons, avec limite de la zone de déplacement
     @Override
     public void move(){
+        this.EatGrass();
         this.produirePoil();
         Smove();
         if (this.getPosition().getX() > ranch.WIDTH){
@@ -84,11 +85,17 @@ public class Sheep extends Character {
         }
     }
 
-    // Méthode de consommation de l'herbe par les moutons
+    // Méthode de consommation de l'herbe par les moutons en cas de collision entre le sheep et le grass
     public void EatGrass(){
         for (Grass grass : ranch.getGrasses()){
-            if (grass.getPosition().getX() == this.getPosition().getX() && grass.getPosition().getY() == this.getPosition().getY()){
+            int distanceX = Math.abs(grass.getPosition().getX() - this.getPosition().getX());
+            int distanceY = Math.abs(grass.getPosition().getY() - this.getPosition().getY());
+            // Calcul de la distance entre le mouton et l'herbe
+            double distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+            // Si la distance est inférieure à 10, le mouton mange l'herbe
+            if (distance < 10){
                 ranch.getGrasses().remove(grass);
+                System.out.println("Grass eaten");
                 break;
             }
         }

@@ -3,6 +3,7 @@ import model.GameObjects.Ranch;
 import model.GameObjects.Sheep;
 import model.Threads.RancherMove;
 import model.Threads.SheepMove;
+import model.Threads.UIAnimation;
 import view.*;
 
 import java.awt.*;
@@ -29,7 +30,9 @@ public class Main {
         }
 
         GamePanel panel = new GamePanel(ranch);
-        GameUIPanel uiPanel = new GameUIPanel();
+        GameUIPanel uiPanel = new GameUIPanel(ranch);
+        //magasin
+        UIAnimation uiAnimation = new UIAnimation(uiPanel);
 
         redessine.start();
         rancherMove.start();
@@ -37,6 +40,8 @@ public class Main {
         for (SheepMove SM : sheepMove) {
             SM.start();
         }
+        //magasin
+        uiAnimation.start();
 
         frame.setLayout(new FlowLayout()); // 1行2列
 

@@ -14,13 +14,20 @@ public class Ranch {
     private int maxSheep = 3; //the maximum number of sheep
     private int maxWolf = 1; //the maximum number of wolf
 
-    Rancher rancher;
-    Wolf wolf;
-    ArrayList<Sheep> sheepFlock = new ArrayList<>();
+    //getters
+    public int getMoney() {
+        return money;
+    }
 
-    ArrayList<Wool> wools = new ArrayList<>();
 
-    ArrayList<Grass> grasses = new ArrayList<>();
+
+    private Rancher rancher;
+    private Wolf wolf;
+    private ArrayList<Sheep> sheepFlock = new ArrayList<>();
+
+    private ArrayList<Wool> wools = new ArrayList<>();
+
+    private ArrayList<Grass> grasses = new ArrayList<>();
 
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), 3, this);
@@ -31,7 +38,7 @@ public class Ranch {
 
         wools.add(new Wool(new Position(190, 310)));
 
-        grasses.add(new Grass(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
+        grasses.add(new Grass(new Position(800, 800)));
     }
 
     public Rancher getRancher() {

@@ -48,6 +48,37 @@ public class Sheep extends Character {
         }
     }
 
+
+    public void GoEatGrass(){
+        //get the nearest grass
+        Grass nearestGrass = null;
+        double minDistance = Double.MAX_VALUE;
+        for (Grass grass : ranch.getGrasses()) {
+            double distance = distance(grass.getPosition());
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestGrass = grass;
+            }
+        }
+        if (nearestGrass != null) {
+            super.StopAllMoveDirections();
+            if (nearestGrass.getPosition().getX() > super.getPosition().getX()) {
+                super.SetMoveDirection(Direction.RIGHT);
+            } else {
+                super.SetMoveDirection(Direction.LEFT);
+            }
+            if (nearestGrass.getPosition().getY() > super.getPosition().getY()) {
+                super.SetMoveDirection(Direction.DOWN);
+            } else {
+                super.SetMoveDirection(Direction.UP);
+            }
+            if(distance(nearestGrass.getPosition()) < 50){
+                ranch.getGrasses().remove(nearestGrass);
+            }
+
+    }
+    }
+
     public void DropWool(){
         if(Probability.isTrue(0.001)){
             ranch.getWools().add(new Wool(new Position(super.getPosition().getX(), super.getPosition().getY())));

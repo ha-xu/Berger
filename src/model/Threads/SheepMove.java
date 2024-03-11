@@ -15,6 +15,7 @@ public class SheepMove extends Thread{
             try{
                 Thread.sleep(Interval);
                 sheep.move();
+                sheep.GoEatGrass();
                 sheep.DropWool();
             }catch(InterruptedException e){
                 e.printStackTrace();

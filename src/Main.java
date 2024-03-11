@@ -1,9 +1,10 @@
 import input.InputManager;
 import model.GameObjects.Ranch;
 import model.GameObjects.Sheep;
-import model.Threads.RancherMove;
-import model.Threads.WolfMove;
-import view.*;
+import view.GameFrame;
+import view.GamePanel;
+import view.GameUIPanel;
+import view.Redessine;
 
 import java.awt.*;
 
@@ -17,17 +18,18 @@ public class Main {
         Ranch ranch = new Ranch();
 
         InputManager inputManager = new InputManager(ranch.getRancher());
-        Redessine redessine = new Redessine(frame);
 
-        // Start the threads
+        // Start the threads--------------------------------------------------------------
         ranch.getRancher().startMove();
-        ranch.getWolf().startMove();
+        //ranch.getWolf().startMove();
         for (Sheep sheep : ranch.getSheepFlock()) {
             sheep.startMove();
         }
+        //--------------------------------------------------------------------------------
 
         GamePanel panel = new GamePanel(ranch);
-        GameUIPanel uiPanel = new GameUIPanel();
+        GameUIPanel uiPanel = new GameUIPanel(ranch);
+        Redessine redessine = new Redessine(panel, uiPanel);
 
         redessine.start();
 
@@ -37,7 +39,12 @@ public class Main {
         frame.add(uiPanel);
         frame.addKeyListener(inputManager);
         frame.pack();
-
+        if (uiPanel.isDisplayable()) {
+            System.out.println("GameUIPanel is correctly added to a visible window.");
+        } else {
+            System.out.println("GameUIPanel is not correctly added to a visible window.");
+        }
+        uiPanel.repaint();
     }
 
     public static void main(String[] args) {

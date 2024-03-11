@@ -66,6 +66,11 @@ public class GamePanel extends JPanel{
     }
 
     @Override
+    public void repaint() {
+        super.repaint();
+    }
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Position rancherPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getRancher().getPosition(), rancherImageIcon);
@@ -95,5 +100,6 @@ public class GamePanel extends JPanel{
         //draw rancher
         g.drawImage(rancherImageIcon.getImage(), rancherPanelPosition.getX(), rancherPanelPosition.getY(), this);
 
+        //System.out.println("paintComponent");
     }
 }

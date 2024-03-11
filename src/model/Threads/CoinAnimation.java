@@ -2,12 +2,12 @@ package model.Threads;
 
 import view.GameUIPanel;
 
-public class UIAnimation extends Thread{
+public class CoinAnimation extends Thread{
     private GameUIPanel gameUIpanel;
     private final int Interval = 10;
     private boolean isRunning = true;
 
-    public UIAnimation(GameUIPanel g){
+    public CoinAnimation(GameUIPanel g){
         this.gameUIpanel = g;
     }
 

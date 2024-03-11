@@ -21,7 +21,9 @@ public class SheepMove extends Thread{
         }
     }
 
+
     public void Pause(){
         isRunning = false;
     }
 }
+

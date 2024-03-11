@@ -2,6 +2,7 @@ package model.GameObjects;
 
 import model.Position;
 import model.Probability;
+import model.Threads.SheepMove;
 
 import java.util.ArrayList;
 
@@ -27,9 +28,9 @@ public class Ranch {
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), this);
         wolf = new Wolf(new Position(200, 60));
-        sheepFlock.add(new Sheep(new Position(150, 160)));
-        sheepFlock.add(new Sheep(new Position(470, 155)));
-        sheepFlock.add(new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
+        sheepFlock.add(new Sheep(new Position(150, 160),this));
+        sheepFlock.add(new Sheep(new Position(470, 155),this));
+        sheepFlock.add(new Sheep(new Position(170, 380), this));
 
         wools.add(new Wool(new Position(190, 310)));
     }
@@ -37,7 +38,11 @@ public class Ranch {
     public void BuySheep(){
         if (money >= 100 && sheepFlock.size() < maxSheep){
             money -= sheepPrice;
-            sheepFlock.add(new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
+            Sheep newSheep = new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500)),this);
+            sheepFlock.add(newSheep);
+            SheepMove newsheepMove = new SheepMove(newSheep);
+            newsheepMove.start();
+
         }
         else{
             System.out.println("You don't have enough money or you have reached the maximum number of sheep");

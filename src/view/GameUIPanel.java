@@ -1,8 +1,10 @@
 package view;
 
 import model.GameObjects.Ranch;
+import model.GameObjects.Rancher;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,11 +41,17 @@ public class GameUIPanel extends JPanel {
         sous_panel.add(button_grass);
 
 
-
         JLabel label_coin = new JLabel("number of coins : "+ nbmoney);
         label_coin.setBounds(0, 0, GameFrame.WIDTH-GameFrame.HEIGHT, 15);
         label_coin.setForeground(Color.WHITE);
         this.add(label_coin);
+
+       /*//ajouter un image de coin à côté du label_coin
+        ImageIcon coinImageIcon = new ImageIcon("src/images/coin.png");
+        coinImageIcon.setImage(coinImageIcon.getImage().getScaledInstance(15, 15, Image.SCALE_DEFAULT));
+        JLabel coinImage = new JLabel(coinImageIcon);
+        coinImage.setBounds(GameFrame.WIDTH-GameFrame.HEIGHT-15, 0, 15, 15);
+        this.add(coinImage);*/
 
         JLabel label_sheep = new JLabel("number of sheeps : "+ nbsheep);
         label_sheep.setBounds(0, 10, GameFrame.WIDTH-GameFrame.HEIGHT, 15);

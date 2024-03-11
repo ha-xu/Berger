@@ -15,6 +15,7 @@ public class Redessine extends Thread{
         while(isRunning){
             try{
                 Thread.sleep(Interval);
+                gameFrame.revalidate();
                 gameFrame.repaint();
             }catch(InterruptedException e){
                 e.printStackTrace();

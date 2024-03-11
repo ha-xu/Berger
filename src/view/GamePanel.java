@@ -12,6 +12,7 @@ public class GamePanel extends JPanel{
     private final ImageIcon grassImageIcon;
 
     private final ImageIcon woolImageIcon;
+    private final ImageIcon coinImageIcon;
 
     private final Ranch ranch;
 
@@ -43,6 +44,9 @@ public class GamePanel extends JPanel{
         grassImageIcon = new ImageIcon("src/images/grassImage.png");
         //TODO: set wool icon size
 
+        coinImageIcon = new ImageIcon("src/images/coin.png");
+        //TODO: set coin icon size
+
 
 
         //set background color
@@ -64,6 +68,10 @@ public class GamePanel extends JPanel{
         return new Position((int) (((double) position.getX()/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT) - icon.getIconWidth()/2, (int) ( ((double) position.getY()/(double)ranch.HEIGHT)*(double)GameFrame.HEIGHT) - icon.getIconHeight()/2);
     }
 
+    public ImageIcon getCoinImageIcon() {
+        return coinImageIcon;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -80,11 +88,10 @@ public class GamePanel extends JPanel{
             g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
         }
         //draw wool
-//        for (Wool wool : ranch.getWools()) {
-//            Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
-//            g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
-//        }
-
+        for (Wool wool : ranch.getWools()) {
+            Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
+            g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
+        }
         //draw grass
         for (Grass grass : ranch.getGrasses()) {
             Position grassPanelPosition = RanchPositionToPanelPosition_Centered(grass.getPosition(), grassImageIcon);

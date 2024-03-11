@@ -4,6 +4,7 @@ import model.Character;
 import model.Direction;
 import model.Position;
 import model.Probability;
+import model.Threads.SheepMove;
 
 import java.util.Objects;
 
@@ -13,6 +14,16 @@ public class Sheep extends Character {
     public static final int HEIGHT = 70;
 
     private final Ranch ranch;
+
+    private SheepMove sheepMove = new SheepMove(this);
+
+    public void startMove(){
+        sheepMove.start();
+    }
+    public void stopMove(){
+        sheepMove.Pause();
+    }
+
 
     public Sheep(Position position, Ranch ranch){
         super(position);
@@ -35,7 +46,12 @@ public class Sheep extends Character {
         if (Probability.isTrue(0.1)){
             super.StopAllMoveDirections();
         }
+    }
 
+    public void DropWool(){
+        if(Probability.isTrue(0.001)){
+            ranch.getWools().add(new Wool(new Position(super.getPosition().getX(), super.getPosition().getY())));
+        }
     }
 
     @Override

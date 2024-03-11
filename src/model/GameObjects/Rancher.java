@@ -3,6 +3,7 @@ package model.GameObjects;
 import model.Character;
 import model.Direction;
 import model.Position;
+import model.Threads.RancherMove;
 
 public class Rancher extends Character {
     public static final int WIDTH = 70;
@@ -11,6 +12,16 @@ public class Rancher extends Character {
 
 
     private final Ranch ranch;
+
+    private RancherMove rancherMove = new RancherMove(this);
+
+    public void startMove(){
+        rancherMove.start();
+    }
+
+    public void stopMove(){
+        rancherMove.Pause();
+    }
     public Rancher(Position position, Ranch ranch){
         super(position);
         this.ranch = ranch;

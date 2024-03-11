@@ -1,6 +1,7 @@
 package model.GameObjects;
 
 import model.Position;
+import model.Probability;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class Ranch {
         sheepFlock.add(new Sheep(new Position(170, 380),1, this));
 
         wools.add(new Wool(new Position(190, 310)));
+
+        grasses.add(new Grass(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
     }
 
     public Rancher getRancher() {

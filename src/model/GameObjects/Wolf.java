@@ -2,6 +2,7 @@ package model.GameObjects;
 
 import model.Character;
 import model.Position;
+import model.Threads.WolfMove;
 
 public class Wolf extends Character {
     public static final int WIDTH = 70;
@@ -11,6 +12,17 @@ public class Wolf extends Character {
     public static final int CLOSEST_DISTANCE_FROM_RANCHER = 200;
 
     private final Ranch ranch;
+
+    private WolfMove wolfMove = new WolfMove(this);
+
+    public void startMove(){
+        wolfMove.start();
+    }
+
+    public void stopMove(){
+        wolfMove.Pause();
+    }
+
     public Wolf(Position position, Ranch ranch){
         super(position);
         this.ranch = ranch;
@@ -64,6 +76,7 @@ public class Wolf extends Character {
 
     //eat sheep if near
     public void eatSheep(Sheep sheep){
+        sheep.stopMove();
         ranch.getSheepFlock().remove(sheep);
     }
 

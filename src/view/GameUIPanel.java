@@ -10,5 +10,11 @@ public class GameUIPanel extends JPanel {
         this.setVisible(true);
 
         setBackground(Color.BLUE);
+
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }

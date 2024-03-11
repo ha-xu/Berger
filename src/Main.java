@@ -2,7 +2,6 @@ import input.InputManager;
 import model.GameObjects.Ranch;
 import model.GameObjects.Sheep;
 import model.Threads.RancherMove;
-import model.Threads.SheepMove;
 import model.Threads.WolfMove;
 import view.*;
 
@@ -19,19 +18,18 @@ public class Main {
 
         InputManager inputManager = new InputManager(ranch.getRancher());
         Redessine redessine = new Redessine(frame);
-        RancherMove rancherMove = new RancherMove(ranch.getRancher());
-        WolfMove wolfMove = new WolfMove(ranch.getWolf());
-        wolfMove.start();
+
+        // Start the threads
+        ranch.getRancher().startMove();
+        ranch.getWolf().startMove();
         for (Sheep sheep : ranch.getSheepFlock()) {
-            SheepMove sheepMove = new SheepMove(sheep);
-            sheepMove.start();
+            sheep.startMove();
         }
 
         GamePanel panel = new GamePanel(ranch);
         GameUIPanel uiPanel = new GameUIPanel();
 
         redessine.start();
-        rancherMove.start();
 
         frame.setLayout(new FlowLayout()); // 1行2列
 

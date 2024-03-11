@@ -1,8 +1,5 @@
 package view;
-import model.GameObjects.Ranch;
-import model.GameObjects.Rancher;
-import model.GameObjects.Sheep;
-import model.GameObjects.Wool;
+import model.GameObjects.*;
 import model.Position;
 
 import javax.swing.*;
@@ -12,8 +9,8 @@ public class GamePanel extends JPanel{
     private final ImageIcon rancherImageIcon;
     private final ImageIcon wolfImageIcon;
     private final ImageIcon sheepImageIcon;
-
     private final ImageIcon woolImageIcon;
+    private final ImageIcon grassImageIcon;
 
     private final Ranch ranch;
 
@@ -45,6 +42,10 @@ public class GamePanel extends JPanel{
         //TODO: set wool icon size
         woolImageIcon.setImage(woolImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Wool.WIDTH), RanchLengthToPanelLength(Wool.HEIGHT), Image.SCALE_DEFAULT));
 
+        grassImageIcon = new ImageIcon("src/images/grassImage.png");
+        grassImageIcon.setImage(grassImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Grass.WIDTH), RanchLengthToPanelLength(Grass.HEIGHT), Image.SCALE_DEFAULT));
+
+
         //set background color
         float [] hsb = new float[3];
         Color.RGBtoHSB(167, 238, 145, hsb);
@@ -70,20 +71,29 @@ public class GamePanel extends JPanel{
         Position rancherPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getRancher().getPosition(), rancherImageIcon);
         Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
 
-        //draw rancher
-        g.drawImage(rancherImageIcon.getImage(), rancherPanelPosition.getX(), rancherPanelPosition.getY(), this);
-        //draw wolf
-        g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
-        //draw sheep
-        for (Sheep sheep : ranch.getSheepFlock()) {
-            Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);
-            g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
+        //draw grass
+        for (model.GameObjects.Grass grass : ranch.getGrasses()) {
+            Position grassPanelPosition = RanchPositionToPanelPosition_Centered(grass.getPosition(), grassImageIcon);
+            g.drawImage(grassImageIcon.getImage(), grassPanelPosition.getX(), grassPanelPosition.getY(), this);
         }
+
         //draw wool
         for (Wool wool : ranch.getWools()) {
             Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
             g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
         }
+
+        //draw sheep
+        for (Sheep sheep : ranch.getSheepFlock()) {
+            Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);
+            g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
+        }
+
+        //draw wolf
+        g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
+
+        //draw rancher
+        g.drawImage(rancherImageIcon.getImage(), rancherPanelPosition.getX(), rancherPanelPosition.getY(), this);
 
     }
 }

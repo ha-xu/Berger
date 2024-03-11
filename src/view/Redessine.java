@@ -15,6 +15,8 @@ public class Redessine extends Thread{
         while(isRunning){
             try{
                 Thread.sleep(Interval);
+                //oblige le frame se concentre sur la fenêtre de jeu
+                gameFrame.revalidate();
                 gameFrame.repaint();
             }catch(InterruptedException e){
                 e.printStackTrace();

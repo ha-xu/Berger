@@ -31,15 +31,19 @@ public abstract class Character {
         switch (direction){
             case UP:
                 isMovingUp = true;
+                isMovingDown = false;
                 break;
             case DOWN:
                 isMovingDown = true;
+                isMovingUp = false;
                 break;
             case LEFT:
                 isMovingLeft = true;
+                isMovingRight = false;
                 break;
             case RIGHT:
                 isMovingRight = true;
+                isMovingLeft = false;
                 break;
         }
     }
@@ -92,5 +96,19 @@ public abstract class Character {
     //calculate the distance between two positions
     public double distance(Position position){
         return Math.sqrt(Math.pow(this.position.getX() - position.getX(), 2) + Math.pow(this.position.getY() - position.getY(), 2));
+    }
+
+    //stay away from another character
+    public void stayAway(Character character){
+            if(position.getX() < character.getPosition().getX()){
+                SetMoveDirection(Direction.LEFT);
+            }else{
+                SetMoveDirection(Direction.RIGHT);
+            }
+            if(position.getY() < character.getPosition().getY()){
+                SetMoveDirection(Direction.UP);
+            }else{
+                SetMoveDirection(Direction.DOWN);
+            }
     }
 }

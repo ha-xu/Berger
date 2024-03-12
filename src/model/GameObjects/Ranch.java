@@ -11,14 +11,16 @@ public class Ranch {
     public final int HEIGHT = 1000;
 
     private int money = 0; //the money of the rancher
-    private int maxSheep = 3; //the maximum number of sheep
+    private int maxSheep = 10; //the maximum number of sheep
     private int maxWolf = 1; //the maximum number of wolf
 
     //getters
     public int getMoney() {
         return money;
     }
-
+    public void setMoney(int money) {
+        this.money = money;
+    }
 
 
     private Rancher rancher;
@@ -31,7 +33,7 @@ public class Ranch {
 
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), 3, this);
-        wolf = new Wolf(new Position(200, 60), this);
+        wolf = new Wolf(new Position(200, 60), 4, this);
         sheepFlock.add(new Sheep(new Position(150, 160), 1, this));
         sheepFlock.add(new Sheep(new Position(470, 155),1, this));
         sheepFlock.add(new Sheep(new Position(170, 380),1, this));
@@ -66,4 +68,11 @@ public class Ranch {
         this.money += money;
     }
 
+    //add sheep
+    public void addRandomSheep(){
+            Sheep sheep = new Sheep(new Position(Probability.randomInt(0, WIDTH), Probability.randomInt(0, HEIGHT)), 1, this);
+            sheepFlock.add(sheep);
+            sheep.startMove();
+
+    }
 }

@@ -21,7 +21,7 @@ public class Main {
 
         // Start the threads--------------------------------------------------------------
         ranch.getRancher().startMove();
-        //ranch.getWolf().startMove();
+        ranch.getWolf().startMove();
         for (Sheep sheep : ranch.getSheepFlock()) {
             sheep.startMove();
         }
@@ -34,17 +34,24 @@ public class Main {
         redessine.start();
 
         frame.setLayout(new FlowLayout()); // 1行2列
-
         frame.add(panel);
         frame.add(uiPanel);
         frame.addKeyListener(inputManager);
         frame.pack();
-        if (uiPanel.isDisplayable()) {
-            System.out.println("GameUIPanel is correctly added to a visible window.");
-        } else {
-            System.out.println("GameUIPanel is not correctly added to a visible window.");
-        }
-        uiPanel.repaint();
+        //frame.setFocusableWindowState(false);
+        //new thread to
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                frame.requestFocus();
+
+            }
+        }).start();
+
     }
 
     public static void main(String[] args) {

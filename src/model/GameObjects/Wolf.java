@@ -28,6 +28,11 @@ public class Wolf extends Character {
         this.ranch = ranch;
     }
 
+    public Wolf(Position position, int speed, Ranch ranch){
+        super(position, speed);
+        this.ranch = ranch;
+    }
+
     //Nearest sheep
     public Sheep nearestSheep(){
         Sheep nearestSheep = null;

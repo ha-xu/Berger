@@ -4,6 +4,7 @@ import model.GameObjects.Sheep;
 import model.Threads.RancherMove;
 import model.Threads.SheepMove;
 import model.Threads.UIAnimation;
+import model.Threads.WolfMove;
 import view.*;
 
 import java.awt.*;
@@ -19,8 +20,14 @@ public class Main {
         Ranch ranch = new Ranch();
 
         InputManager inputManager = new InputManager(ranch.getRancher());
+
+        ranch.getRancher().startMove();
+
         Redessine redessine = new Redessine(frame);
         RancherMove rancherMove = new RancherMove(ranch.getRancher());
+
+        //ajout wolf
+        WolfMove wolfMove = new WolfMove(ranch.getWolf());
 
         //reprendre les moutons et les déplacements des moutons
         ArrayList<Sheep> sheepFlock = ranch.getSheepFlock();
@@ -36,6 +43,8 @@ public class Main {
 
         redessine.start();
         rancherMove.start();
+        wolfMove.start();
+
         //pour déplacer les moutons
         for (SheepMove SM : sheepMove) {
             SM.start();
@@ -50,6 +59,19 @@ public class Main {
         frame.addKeyListener(inputManager);
         frame.pack();
 
+        //frame.setFocusableWindowState(false);
+        //new thread to
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                frame.requestFocus();
+
+            }
+        }).start();
     }
 
     public static void main(String[] args) {

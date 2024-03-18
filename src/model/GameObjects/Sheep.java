@@ -49,7 +49,12 @@ public class Sheep extends Character {
     @Override
     public void move(){
         this.EatGrass();
-        this.produirePoil();
+        //vérifier dans sheepFlock si le tableau est vide ou pas pour produire des poils
+        if (ranch.sheepFlock.isEmpty()) {
+            return;
+        }else {
+            this.produirePoil();
+        }
         Smove();
         if (this.getPosition().getX() > ranch.WIDTH){
             super.StopMoveDirection(Direction.RIGHT);

@@ -14,7 +14,10 @@ public abstract class Character {
     public Character(Position position) {
         this.position = position;
     }
-
+    public Character(Position position, int speed) {
+        this.position = position;
+        this.speed = speed;
+    }
     public Position getPosition() {
         return position;
     }
@@ -89,5 +92,19 @@ public abstract class Character {
     //calculate the distance between two positions
     public double distance(Position position){
         return Math.sqrt(Math.pow(this.position.getX() - position.getX(), 2) + Math.pow(this.position.getY() - position.getY(), 2));
+    }
+
+    //stay away from another character
+    public void stayAway(Character character){
+        if(position.getX() < character.getPosition().getX()){
+            SetMoveDirection(Direction.LEFT);
+        }else{
+            SetMoveDirection(Direction.RIGHT);
+        }
+        if(position.getY() < character.getPosition().getY()){
+            SetMoveDirection(Direction.UP);
+        }else{
+            SetMoveDirection(Direction.DOWN);
+        }
     }
 }

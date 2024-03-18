@@ -27,7 +27,7 @@ public class Ranch {
 
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), this);
-        wolf = new Wolf(new Position(200, 60));
+        wolf = new Wolf(new Position(200, 60), this);
         //ajouter d'abord trois moutons
         sheepFlock.add(new Sheep(new Position(150, 160), this));
         sheepFlock.add(new Sheep(new Position(470, 155), this));

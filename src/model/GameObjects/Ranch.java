@@ -3,8 +3,6 @@ package model.GameObjects;
 import model.Position;
 import model.Probability;
 import model.Threads.RanchMove;
-import model.Threads.RancherMove;
-import model.Threads.SheepMove;
 
 import java.util.ArrayList;
 
@@ -13,6 +11,8 @@ public class Ranch {
     public final int WIDTH = 1000;
     public final int HEIGHT = 1000;
 
+    //possibility of generate wolf
+    private final double GENERATE_WOLF_POSSIBILITY = 0.005;
     private int money = 550; //the money of the rancher
     private final int grassPrice = 10; //the price of grass
     private final int sheepPrice = 100; //the price of sheep
@@ -39,7 +39,7 @@ public class Ranch {
 
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), 5, this);
-        wolves.add(new Wolf(new Position(200, 60),6, this));
+//        wolves.add(new Wolf(new Position(200, 60),6, this));
         //ajouter d'abord trois moutons
         sheepFlock.add(new Sheep(new Position(150, 160),3, this));
         sheepFlock.add(new Sheep(new Position(470, 155),3, this));
@@ -73,8 +73,7 @@ public class Ranch {
 
     //ranch move
     public void move(){
-
-        if(Probability.isTrue(0.03) && wolves.isEmpty()&& !sheepFlock.isEmpty()){
+        if(Probability.isTrue(GENERATE_WOLF_POSSIBILITY) && wolves.isEmpty()&& !sheepFlock.isEmpty()){
             AddWolf(1);
         }
     }

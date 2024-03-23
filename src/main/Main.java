@@ -1,7 +1,9 @@
+package main;
+
 import input.InputManager;
 import model.GameObjects.Ranch;
+import view.GameMenuPanel;
 import view.Threads.Redessine;
-import view.Threads.RedessineUI;
 import view.GameFrame;
 import view.GamePanel;
 import view.GameUIPanel;
@@ -12,7 +14,16 @@ public class Main {
 
     private static final GameFrame frame = new GameFrame();
 
-    private static void GameStart() {
+    public static void ShowMenu() {
+        frame.getContentPane().removeAll();
+        frame.setLayout(new FlowLayout());
+        frame.add(new GameMenuPanel());
+        frame.pack();
+    }
+
+    public static void GameStart() {
+
+        frame.getContentPane().removeAll();
 
         Ranch ranch = new Ranch();
 
@@ -48,6 +59,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        GameStart();
+        ShowMenu();
+//        GameStart();
     }
 }

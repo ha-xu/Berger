@@ -17,7 +17,7 @@ public class Sheep extends Character {
     private int NbEatenGrass = 0;
     private double ProbaProduitPoil = 0.001;
     private int PoilsProduit = 0;
-    public static final int  WIDTH = 70;
+    public static final int WIDTH = 70;
     public static final int HEIGHT = 70;
 
     public static final int GRASS_EATING_DISTANCE = 40;
@@ -117,10 +117,13 @@ public class Sheep extends Character {
         if(!ranch.getGrasses().isEmpty()){
             Grass closestGrass = closestGrass();
             followGrass(closestGrass);
-            if (this.distance(closestGrass.getPosition()) < GRASS_EATING_DISTANCE){
-                EatGrass(closestGrass);
+            if (closestGrass != null){
+                if (this.distance(closestGrass.getPosition()) < GRASS_EATING_DISTANCE){
+                    EatGrass(closestGrass);
+                }
                 NbEatenGrass++;
             }
+
         }else{
             randomMove();
         }

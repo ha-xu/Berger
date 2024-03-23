@@ -3,9 +3,11 @@ package model.GameObjects;
 import model.Character;
 import model.Direction;
 import model.Position;
+import model.Probability;
 import model.Threads.SheepMove;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Random;
 
 import static model.Probability.isTrue;
@@ -48,27 +50,36 @@ public class Sheep extends Character {
 
     //Méthode de déplacement aléatoire des moutons
     public void randomMove(){
-        boolean isMoving = isTrue(0.1);
-        //System.out.println(isMoving);
-        if (isMoving){
+//        boolean isMoving = isTrue(0.1);
+//        //System.out.println(isMoving);
+//        if (isMoving){
+//            super.StopAllMoveDirections();
+//            Random random = new Random();
+//            int direction = random.nextInt(4);
+//            switch (direction){
+//                case 0:
+//                    SetMoveDirection(Direction.UP);
+//                    break;
+//                case 1:
+//                    SetMoveDirection(Direction.DOWN);
+//                    break;
+//                case 2:
+//                    SetMoveDirection(Direction.LEFT);
+//                    break;
+//                case 3:
+//                    SetMoveDirection(Direction.RIGHT);
+//                    break;
+//            }
+//            //System.out.println(direction);
+//        }
+
+        if(Probability.isTrue(0.03)){
+            Direction randomDirection = Probability.randomDirection();
+            super.SetMoveDirection(Objects.requireNonNull(randomDirection));
+        }
+
+        if (Probability.isTrue(0.1)){
             super.StopAllMoveDirections();
-            Random random = new Random();
-            int direction = random.nextInt(4);
-            switch (direction){
-                case 0:
-                    SetMoveDirection(Direction.UP);
-                    break;
-                case 1:
-                    SetMoveDirection(Direction.DOWN);
-                    break;
-                case 2:
-                    SetMoveDirection(Direction.LEFT);
-                    break;
-                case 3:
-                    SetMoveDirection(Direction.RIGHT);
-                    break;
-            }
-            //System.out.println(direction);
         }
     }
 
@@ -151,5 +162,24 @@ public class Sheep extends Character {
             ranch.getGrasses().remove(grass);
         }
     }
+
+    //stay away from sheep
+//    public void stayAwayFromSheep(){
+//        for (Sheep sheep : ranch.getSheepFlock()) {
+//            if (sheep != this){
+//                stayAway(sheep);
+//            }
+//        }
+//    }
+
+    //stay away from rancher
+    public void stayAwayFromRancher(){
+        stayAway(ranch.getRancher());
+    }
+
+    //stay away from wolf
+//    public void stayAwayFromWolf(){
+//        stayAway(ranch.getWolf());
+//    }
 
 }

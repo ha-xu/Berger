@@ -152,4 +152,9 @@ public abstract class Character {
             StopMoveDirection(Direction.DOWN);
         }
     }
+
+    //is out of ranch
+    public boolean isOutOfRanch(int characterWidth,int characterHeight, int ranchWidth, int ranchHeight){
+        return position.getX() < -characterWidth/2 || position.getX() > ranchHeight + characterWidth/2 || position.getY() < -characterHeight/2 || position.getY() > ranchHeight + characterHeight/2;
+    }
 }

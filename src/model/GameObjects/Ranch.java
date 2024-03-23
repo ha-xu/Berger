@@ -2,6 +2,8 @@ package model.GameObjects;
 
 import model.Position;
 import model.Probability;
+import model.Threads.RanchMove;
+import model.Threads.RancherMove;
 import model.Threads.SheepMove;
 
 import java.util.ArrayList;
@@ -18,16 +20,26 @@ public class Ranch {
     private int maxWolf = 1; //the maximum number of wolf
 
     Rancher rancher;
-    Wolf wolf;
+    ArrayList<Wolf> wolves = new ArrayList<>();
     ArrayList<Sheep> sheepFlock = new ArrayList<>();
 
     ArrayList<Wool> wools = new ArrayList<>();
 
     ArrayList<Grass> grasses = new ArrayList<>();
 
+    RanchMove ranchMove = new RanchMove(this);
+
+    public void startMove(){
+        ranchMove.start();
+    }
+
+    public void stopMove(){
+        ranchMove.Pause();
+    }
+
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), 5, this);
-        wolf = new Wolf(new Position(200, 60),6, this);
+        wolves.add(new Wolf(new Position(200, 60),6, this));
         //ajouter d'abord trois moutons
         sheepFlock.add(new Sheep(new Position(150, 160),3, this));
         sheepFlock.add(new Sheep(new Position(470, 155),3, this));
@@ -36,19 +48,34 @@ public class Ranch {
         wools.add(new Wool(new Position(190, 310)));
     }
 
-    public void startMove(){
+    public void start(){
+        startMove();
         rancher.startMove();
-        wolf.startMove();
+        for (Wolf wolf : wolves) {
+            wolf.startMove();
+        }
+
         for (Sheep sheep : sheepFlock) {
             sheep.startMove();
         }
     }
 
-    public void stopMove(){
+    public void stop(){
+        stopMove();
         rancher.stopMove();
-        wolf.stopMove();
+        for (Wolf wolf : wolves) {
+            wolf.stopMove();
+        }
         for (Sheep sheep : sheepFlock) {
             sheep.stopMove();
+        }
+    }
+
+    //ranch move
+    public void move(){
+
+        if(Probability.isTrue(0.03) && wolves.isEmpty()&& !sheepFlock.isEmpty()){
+            AddWolf(1);
         }
     }
 
@@ -84,10 +111,10 @@ public class Ranch {
         return money;
     }
 
-    public Wolf getWolf() {
-        return wolf;
-    }
 
+    public ArrayList<Wolf> getWolves() {
+        return wolves;
+    }
     public ArrayList<Sheep> getSheepFlock() {
         return sheepFlock;
     }
@@ -105,4 +132,32 @@ public class Ranch {
         this.money += money;
     }
 
+
+    private Position randomPositionOutsideRanch(int length){
+        //generate random position outside ranch but within the frame
+        //random X
+        int x = Probability.randomInt(-length, WIDTH + length);
+        //random Y
+        if(x < 0 || x > WIDTH){
+            return new Position(x, Probability.randomInt(-length, HEIGHT + length));
+        }
+        else{
+            int y_up = Probability.randomInt(-length, 0);
+            int y_down = Probability.randomInt(HEIGHT, HEIGHT + length);
+            if(Probability.isTrue(0.5)){
+                return new Position(x, y_up);
+            }
+            else{
+                return new Position(x, y_down);
+            }
+        }
+    }
+
+    private void AddWolf(int nbWolf){
+        for (int i = 0; i < nbWolf; i++) {
+            Wolf wolf = new Wolf(randomPositionOutsideRanch(30), 6,this);
+            wolves.add(wolf);
+            wolf.startMove();
+        }
+    }
 }

@@ -13,6 +13,8 @@ public class Wolf extends Character {
 
     private final Ranch ranch;
 
+    private boolean runningAway = false;
+
     private WolfMove wolfMove = new WolfMove(this);
 
     public void startMove(){
@@ -64,6 +66,12 @@ public class Wolf extends Character {
     //run away from rancher
     public void runAwayFromRancher(){
         stayAway(ranch.getRancher());
+        //if out of ranch
+        if(isOutOfRanch(WIDTH,HEIGHT, ranch.WIDTH, ranch.HEIGHT)){
+            this.stopMove();
+            ranch.getWolves().remove(this);
+            System.out.println("Wolf removed from ranch");
+        }
     }
 
 //    public void runAwayFromRancher(int safeDistance){
@@ -73,8 +81,11 @@ public class Wolf extends Character {
 //    }
 
     public void WolfActions(){
-        if(distance(ranch.getRancher())<CLOSEST_DISTANCE_FROM_RANCHER){
+        if(runningAway){
             runAwayFromRancher();
+        }else
+        if(distance(ranch.getRancher())<CLOSEST_DISTANCE_FROM_RANCHER){
+            runningAway = true;
         }else if(!ranch.getSheepFlock().isEmpty()){
             Sheep nearestSheep = nearestSheep();
             chaseSheep(nearestSheep);

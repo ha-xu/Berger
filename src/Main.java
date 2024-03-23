@@ -2,7 +2,9 @@ import input.InputManager;
 import model.GameObjects.Ranch;
 import view.Threads.Redessine;
 import view.Threads.RedessineUI;
-import view.*;
+import view.GameFrame;
+import view.GamePanel;
+import view.GameUIPanel;
 
 import java.awt.*;
 
@@ -22,7 +24,7 @@ public class Main {
         //start the ui thread to repaint the ui panel for animation
         uiPanel.startRedessine();
         //ranch start means game start
-        ranch.startMove();
+        ranch.start();
 
         frame.startRedessine(); //start the thread to repaint the frame
         frame.setLayout(new FlowLayout()); // 1行2列

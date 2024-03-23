@@ -74,17 +74,25 @@ public class GamePanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Position rancherPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getRancher().getPosition(), rancherImageIcon);
-        Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
+//        Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
 
         //make copys
         List<Sheep> sheepFlock =  new ArrayList<>(ranch.getSheepFlock());
+        List<Wolf> wolves = new ArrayList<>(ranch.getWolves());
         List<Wool> wools = new ArrayList<>(ranch.getWools());
         List<Grass> grasses = new ArrayList<>(ranch.getGrasses());
+
 
         //draw rancher
         g.drawImage(rancherImageIcon.getImage(), rancherPanelPosition.getX(), rancherPanelPosition.getY(), this);
         //draw wolf
-        g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
+//        g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
+
+        //draw wolf
+        for (Wolf wolf : wolves) {
+            Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(wolf.getPosition(), wolfImageIcon);
+            g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
+        }
         //draw sheep
         for (Sheep sheep : sheepFlock) {
             Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);

@@ -6,6 +6,7 @@ import model.Position;
 import model.Probability;
 import model.Threads.SheepMove;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
@@ -13,12 +14,15 @@ import java.util.Random;
 import static model.Probability.isTrue;
 
 public class Sheep extends Character {
-
+    private int NbEatenGrass = 0;
+    private double ProbaProduitPoil = 0.001;
+    private int PoilsProduit = 0;
     public static final int  WIDTH = 70;
     public static final int HEIGHT = 70;
 
     public static final int GRASS_EATING_DISTANCE = 40;
-
+    public static final int CLOSEST_DISTANCE_FROM_WOLF = 200;
+    public static final int CLOSEST_DISTANCE_FROM_SHEEP = 30;
 
     private Ranch ranch;
 
@@ -83,22 +87,51 @@ public class Sheep extends Character {
         }
     }
 
+    //Lors d'une rencontre d'un des loups, le mouton fuira. On évite que les moutons se superposent.
+    public void SheepActions(){
+        ArrayList<Wolf> wolves = new ArrayList<>(ranch.getWolves());
+        ArrayList<Sheep> sheepFlock = new ArrayList<>(ranch.getSheepFlock());
+        for (Wolf wolf : wolves){
+            if (this.distance(wolf.getPosition()) < CLOSEST_DISTANCE_FROM_WOLF){
+                stayAway(wolf);
+            }
+        }
+        for (Sheep sheep : sheepFlock){
+            if (sheep != this){
+                if (this.distance(sheep.getPosition()) < CLOSEST_DISTANCE_FROM_SHEEP){
+                    stayAway(sheep);
+                }
+            }
+        }
+        if(this.distance(ranch.getRancher().getPosition()) < 80){
+            stayAwayFromRancher();
+        }
+    }
+
     //Méthode de déplacement des moutons, avec limite de la zone de déplacement
     @Override
     public void move(){
 //        this.EatGrass();
         //vérifier dans sheepFlock si le tableau est vide ou pas pour produire des poils
 
-        this.produirePoil();
-
         if(!ranch.getGrasses().isEmpty()){
             Grass closestGrass = closestGrass();
             followGrass(closestGrass);
             if (this.distance(closestGrass.getPosition()) < GRASS_EATING_DISTANCE){
                 EatGrass(closestGrass);
+                NbEatenGrass++;
             }
         }else{
             randomMove();
+        }
+
+        if(NbEatenGrass == 2 && PoilsProduit < 5){
+            this.produirePoil();
+            ProbaProduitPoil = 0.1;
+        }else if(NbEatenGrass > 2 && PoilsProduit >= 5){
+            ProbaProduitPoil = 0.001;
+            NbEatenGrass = 0;
+            PoilsProduit = 0;
         }
 
 //        if (this.getPosition().getX() > ranch.WIDTH){
@@ -113,6 +146,7 @@ public class Sheep extends Character {
 //        if(this.getPosition().getY() < 0){
 //            super.StopMoveDirection(Direction.UP);
 //        }
+        SheepActions();
         stayInRanch(WIDTH, HEIGHT, ranch.WIDTH, ranch.HEIGHT);
         super.move();
     }
@@ -130,9 +164,10 @@ public class Sheep extends Character {
     /**
      * Production aléatoire des poils par les moutons*/
     public void produirePoil(){
-        boolean produitPoil = isTrue(0.001);
+        boolean produitPoil = isTrue(ProbaProduitPoil);
         if(produitPoil){
             ranch.getWools().add(new Wool(new Position(this.getPosition().getX(), this.getPosition().getY())));
+            PoilsProduit++;
         }
     }
 

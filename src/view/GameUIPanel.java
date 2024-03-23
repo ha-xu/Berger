@@ -1,18 +1,30 @@
 package view;
 
 import model.GameObjects.Ranch;
+import view.Threads.RedessineUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 
 public class GameUIPanel extends JPanel {
     private Ranch ranch;
     private int nbmoney = 0;
     private int nbsheep = 0;
     private int nbgrass = 0;
+
+    //threads
+    private RedessineUI redessineUi = new RedessineUI(this);
+
+    public void startRedessine(){
+        redessineUi.start();
+    }
+
+    public void stopRedessine(){
+        redessineUi.Pause();
+    }
+
     public GameUIPanel(Ranch r){
         this.ranch = r;
         this.setPreferredSize(new Dimension(GameFrame.WIDTH-GameFrame.HEIGHT, GameFrame.HEIGHT));

@@ -14,6 +14,8 @@ public class GamePanel extends JPanel{
 
     private final Ranch ranch;
 
+
+
     public GamePanel(Ranch ranch){
         this.ranch = ranch;
 
@@ -29,18 +31,22 @@ public class GamePanel extends JPanel{
         //set icon size
         rancherImageIcon.setImage(rancherImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
-        //set image sheep
-        sheepImageIcon = new ImageIcon("src/images/mouton.png");
+
+        sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
         //TODO: set sheep icon size
+        sheepImageIcon.setImage(sheepImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Sheep.WIDTH), RanchLengthToPanelLength(Sheep.HEIGHT), Image.SCALE_DEFAULT));
 
         wolfImageIcon = new ImageIcon("src/images/wolfImage.png");
-        //TODO: set wolf icon size
+        //TODO: wolf sheep icon size
+        wolfImageIcon.setImage(wolfImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
         woolImageIcon = new ImageIcon("src/images/woolImage.png");
         //TODO: set wool icon size
+        woolImageIcon.setImage(woolImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Wool.WIDTH), RanchLengthToPanelLength(Wool.HEIGHT), Image.SCALE_DEFAULT));
 
         grassImageIcon = new ImageIcon("src/images/grassImage.png");
-        //TODO: set wool icon size
+        grassImageIcon.setImage(grassImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Grass.WIDTH), RanchLengthToPanelLength(Grass.HEIGHT), Image.SCALE_DEFAULT));
+
 
         //set background color
         float [] hsb = new float[3];
@@ -49,8 +55,8 @@ public class GamePanel extends JPanel{
 
     }
 
-    int RanchLengthToPanelLength(int length){
-        return (int) (((double) length/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT);
+    int RanchLengthToPanelLength(double length){
+        return (int) (( length/ranch.WIDTH)*GameFrame.HEIGHT);
     }
 
     Position RanchPositionToPanelPosition(Position position){

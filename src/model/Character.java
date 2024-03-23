@@ -70,16 +70,16 @@ public abstract class Character {
 
     public void move(){
         if(isMovingUp){
-            position.setY(position.getY() - speed);
+            position.setY((int)(position.getY() - speed));
         }
         if(isMovingDown){
-            position.setY(position.getY() + speed);
+            position.setY((int)(position.getY() + speed));
         }
         if(isMovingLeft){
-            position.setX(position.getX() - speed);
+            position.setX((int)(position.getX() - speed));
         }
         if(isMovingRight){
-            position.setX(position.getX() + speed);
+            position.setX((int)(position.getX() + speed));
         }
     }
 

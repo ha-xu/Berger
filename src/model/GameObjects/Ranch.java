@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class Ranch {
 
-    public final int WIDTH = 500;
-    public final int HEIGHT = 500;
+    public final double WIDTH = 1000;
+    public final double HEIGHT = 1000;
 
     private int money = 550; //the money of the rancher
     private final int grassPrice = 10; //the price of grass
     private final int sheepPrice = 100; //the price of sheep
-    private int maxSheep = 30; //the maximum number of sheep
+    private double maxSheep = 30; //the maximum number of sheep
     private int maxWolf = 1; //the maximum number of wolf
 
     Rancher rancher;
@@ -26,14 +26,30 @@ public class Ranch {
     ArrayList<Grass> grasses = new ArrayList<>();
 
     public Ranch() {
-        rancher = new Rancher(new Position(50, 50), this);
-        wolf = new Wolf(new Position(200, 60), this);
+        rancher = new Rancher(new Position(50, 50), 5, this);
+        wolf = new Wolf(new Position(200, 60),6, this);
         //ajouter d'abord trois moutons
-        sheepFlock.add(new Sheep(new Position(150, 160), this));
-        sheepFlock.add(new Sheep(new Position(470, 155), this));
-        sheepFlock.add(new Sheep(new Position(170, 380), this));
+        sheepFlock.add(new Sheep(new Position(150, 160),3, this));
+        sheepFlock.add(new Sheep(new Position(470, 155),3, this));
+        sheepFlock.add(new Sheep(new Position(170, 380),3, this));
 
         wools.add(new Wool(new Position(190, 310)));
+    }
+
+    public void startMove(){
+        rancher.startMove();
+        wolf.startMove();
+        for (Sheep sheep : sheepFlock) {
+            sheep.startMove();
+        }
+    }
+
+    public void stopMove(){
+        rancher.stopMove();
+        wolf.stopMove();
+        for (Sheep sheep : sheepFlock) {
+            sheep.stopMove();
+        }
     }
 
     //combination avec le magasin (Alizée) et le mouton (Xi)

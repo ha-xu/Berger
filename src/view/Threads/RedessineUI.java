@@ -1,24 +1,23 @@
-package model.Threads;
+package view.Threads;
 
 import view.GameUIPanel;
 
-public class UIAnimation extends Thread{
+public class RedessineUI extends Thread{
     private GameUIPanel gameUIpanel;
-    private final int Interval = 10;
     private boolean isRunning = true;
 
-    public UIAnimation(GameUIPanel g){
+    public RedessineUI(GameUIPanel g){
         this.gameUIpanel = g;
     }
 
     public void run(){
         while(isRunning){
             try{
-                Thread.sleep(Interval);
-                gameUIpanel.UIAnimation();
+                Thread.sleep(Redessine.REPAINT_INTERVAL);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
+            gameUIpanel.UIAnimation();
         }
     }
 

@@ -6,18 +6,19 @@ import model.Position;
 import model.Threads.RancherMove;
 
 public class Rancher extends Character {
-    public static final int WIDTH = 70;
-    public static final int HEIGHT = 70;
-    public final int collectWoolRange = 80;
+    public static final double WIDTH = 80;
+    public static final double HEIGHT = 80;
+    public final double collectWoolRange = 50;
 
     private final Ranch ranch;
-    private RancherMove rancherMove = new RancherMove(this);
+    private final RancherMove rancherMove = new RancherMove(this);
     public void startMove(){
         rancherMove.start();
     }
     public void stopMove(){
         rancherMove.Pause();
     }
+
     public Rancher(Position position, Ranch ranch){
         super(position);
         this.ranch = ranch;

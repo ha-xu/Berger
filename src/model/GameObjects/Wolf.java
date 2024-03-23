@@ -3,13 +3,36 @@ package model.GameObjects;
 import model.Character;
 import model.Direction;
 import model.Position;
+import model.Threads.WolfMove;
 
 import java.util.ArrayList;
 
 public class Wolf extends Character {
+
+    public static final double WIDTH = 70;
+    public static final double HEIGHT = 70;
     Ranch ranch;
+
+    //WolfMove
+    private final WolfMove wolfMove = new WolfMove(this);
+
+    //startMove
+    public void startMove(){
+        wolfMove.start();
+    }
+
+    //stopMove
+    public void stopMove(){
+        wolfMove.Pause();
+    }
+
     public Wolf(Position position,Ranch ranch){
         super(position);
+        this.ranch = ranch;
+    }
+
+    public Wolf(Position position, int speed, Ranch ranch){
+        super(position, speed);
         this.ranch = ranch;
     }
 

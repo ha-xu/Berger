@@ -3,6 +3,7 @@ package model.GameObjects;
 import model.Character;
 import model.Direction;
 import model.Position;
+import model.Threads.SheepMove;
 
 import java.util.Random;
 
@@ -10,8 +11,23 @@ import static model.Probability.isTrue;
 
 public class Sheep extends Character {
 
-    //private boolean isAlive;
+    public static final int  WIDTH = 70;
+    public static final int HEIGHT = 70;
+
+
     private Ranch ranch;
+
+    private final SheepMove sheepMove = new SheepMove(this);
+
+    //startMove
+    public void startMove(){
+        sheepMove.start();
+    }
+
+    //stopMove
+    public void stopMove(){
+        sheepMove.Pause();
+    }
 
     //Constructeur
     public Sheep(Position position, Ranch ranch){
@@ -19,6 +35,14 @@ public class Sheep extends Character {
         //this.isAlive = true;
         this.ranch = ranch;
     }
+
+    //Constructeur
+    public Sheep(Position position, int speed, Ranch ranch){
+        super(position, speed);
+        //this.isAlive = true;
+        this.ranch = ranch;
+    }
+
     //Méthode de déplacement aléatoire des moutons
     public void Smove(){
         boolean isMoving = isTrue(0.1);
@@ -84,7 +108,7 @@ public class Sheep extends Character {
     /**
      * Production aléatoire des poils par les moutons*/
     public void produirePoil(){
-        boolean produitPoil = isTrue(0.001);
+        boolean produitPoil = isTrue(0.1);
         if(produitPoil){
             ranch.getWools().add(new Wool(new Position(this.getPosition().getX(), this.getPosition().getY())));
         }
@@ -96,7 +120,7 @@ public class Sheep extends Character {
             int distanceX = Math.abs(grass.getPosition().getX() - this.getPosition().getX());
             int distanceY = Math.abs(grass.getPosition().getY() - this.getPosition().getY());
             // Calcul de la distance entre le mouton et l'herbe
-            double distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
+            double  distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
             // Si la distance est inférieure à 10, le mouton mange l'herbe
             if (distance < 10){
                 ranch.getGrasses().remove(grass);

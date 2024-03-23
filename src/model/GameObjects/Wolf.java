@@ -1,32 +1,29 @@
 package model.GameObjects;
 
 import model.Character;
-import model.Direction;
 import model.Position;
 import model.Threads.WolfMove;
 
-import java.util.ArrayList;
-
 public class Wolf extends Character {
+    public static final int WIDTH = 70;
+    public static final int HEIGHT = 70;
 
-    public static final double WIDTH = 70;
-    public static final double HEIGHT = 70;
-    Ranch ranch;
+    public static final int EAT_SHEEP_RANGE = 10;
+    public static final int CLOSEST_DISTANCE_FROM_RANCHER = 200;
 
-    //WolfMove
-    private final WolfMove wolfMove = new WolfMove(this);
+    private final Ranch ranch;
 
-    //startMove
+    private WolfMove wolfMove = new WolfMove(this);
+
     public void startMove(){
         wolfMove.start();
     }
 
-    //stopMove
     public void stopMove(){
         wolfMove.Pause();
     }
 
-    public Wolf(Position position,Ranch ranch){
+    public Wolf(Position position, Ranch ranch){
         super(position);
         this.ranch = ranch;
     }
@@ -36,69 +33,62 @@ public class Wolf extends Character {
         this.ranch = ranch;
     }
 
+    //Nearest sheep
+    public Sheep nearestSheep(){
+        Sheep nearestSheep = null;
+        double minDistance = Double.MAX_VALUE;
+        for (Sheep sheep : ranch.getSheepFlock()) {
+            double distance = distance(sheep.getPosition());
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestSheep = sheep;
+            }
+        }
+        return nearestSheep;
+    }
+
+    //Chase sheep
+    public void chaseSheep(Sheep sheep){
+        if (sheep != null) {
+            follow(sheep);
+        }
+    }
+
+    //eat sheep if near
+    public void eatSheep(Sheep sheep){
+        System.out.println("Wolf ate a sheep");
+        sheep.stopMove();
+        ranch.getSheepFlock().remove(sheep);
+    }
+
+    //run away from rancher
+    public void runAwayFromRancher(){
+        stayAway(ranch.getRancher());
+    }
+
+//    public void runAwayFromRancher(int safeDistance){
+//        if(distance(ranch.getRancher())<safeDistance){
+//            stayAway(ranch.getRancher());
+//        }
+//    }
+
+    public void WolfActions(){
+        if(distance(ranch.getRancher())<CLOSEST_DISTANCE_FROM_RANCHER){
+            runAwayFromRancher();
+        }else if(!ranch.getSheepFlock().isEmpty()){
+            Sheep nearestSheep = nearestSheep();
+            chaseSheep(nearestSheep);
+            if(distance(nearestSheep.getPosition()) < EAT_SHEEP_RANGE){
+                eatSheep(nearestSheep);
+            }
+        }else{
+            runAwayFromRancher();
+        }
+    }
+
     @Override
     public void move() {
-        // TODO Auto-generated method stub -- To chase sheep
-        if (ranch.sheepFlock.isEmpty()) {
-            return;
-        }
-
-        moveToSheep(ranch.getSheepFlock().get(0));
+        WolfActions();
         super.move();
-    }
-    public void moveToSheep(Sheep sheep) {
-
-        Position wolfPosition = this.getPosition();
-
-
-        Position sheepPosition = sheep.getPosition();
-        StopAllMoveDirections();
-
-
-        if (wolfPosition.getX() < sheepPosition.getX()) {
-            SetMoveDirection(Direction.RIGHT);
-        }
-        if (wolfPosition.getX() > sheepPosition.getX()) {
-            SetMoveDirection(Direction.LEFT);
-        }
-
-        if (wolfPosition.getY() < sheepPosition.getY()) {
-            SetMoveDirection(Direction.DOWN);
-        }
-
-        if (wolfPosition.getY() > sheepPosition.getY()) {
-            SetMoveDirection(Direction.UP);
-        }
-
-
-
-
-        ArrayList<Sheep> sheepFlock = ranch.getSheepFlock();
-        if(this.distance(sheepPosition) < 20)
-            sheepFlock.remove(sheep);
-    }
-    public void ranAwayFromRancher(){
-        Position wolfPosition = this.getPosition();
-        Position rancherPosition =ranch.getRancher().getPosition();
-        int deltaX = wolfPosition.getX() - rancherPosition.getX();
-        int deltaY = wolfPosition.getY() - rancherPosition.getY();
-        StopAllMoveDirections();
-
-        if (deltaX < -20) {
-            SetMoveDirection(Direction.RIGHT);
-        }
-
-        else if (deltaX > 20) {
-            SetMoveDirection(Direction.LEFT);
-        }
-
-
-        if (deltaY < -20) {
-            SetMoveDirection(Direction.DOWN);
-        }
-
-        else if (deltaY > 20) {
-            SetMoveDirection(Direction.UP);
-        }
     }
 }

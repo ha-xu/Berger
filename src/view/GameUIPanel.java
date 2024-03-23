@@ -10,12 +10,16 @@ import java.awt.event.ActionListener;
 
 public class GameUIPanel extends JPanel {
     private Ranch ranch;
-    private int nbmoney = 0;
+    private int money = 0;
     private int nbsheep = 0;
     private int nbgrass = 0;
 
+    private JLabel label_coin;
+    private JLabel label_sheep;
+    private JLabel label_grass;
+
     //threads
-    private RedessineUI redessineUi = new RedessineUI(this);
+    private final RedessineUI redessineUi = new RedessineUI(this);
 
     public void startRedessine(){
         redessineUi.start();
@@ -47,17 +51,17 @@ public class GameUIPanel extends JPanel {
 
 
 
-        JLabel label_coin = new JLabel("number of coins : "+ nbmoney);
+        label_coin = new JLabel("number of coins : "+ money);
         label_coin.setBounds(0, 0, GameFrame.WIDTH-GameFrame.HEIGHT, 15);
         label_coin.setForeground(Color.WHITE);
         this.add(label_coin);
 
-        JLabel label_sheep = new JLabel("number of sheeps : "+ nbsheep);
+        label_sheep = new JLabel("number of sheeps : "+ nbsheep);
         label_sheep.setBounds(0, 10, GameFrame.WIDTH-GameFrame.HEIGHT, 15);
         label_sheep.setForeground(Color.WHITE);
         this.add(label_sheep);
 
-        JLabel label_grass = new JLabel("number of grasses : "+ nbgrass);
+        label_grass = new JLabel("number of grasses : "+ nbgrass);
         label_grass.setBounds(0, 20, GameFrame.WIDTH-GameFrame.HEIGHT, 15);
         label_grass.setForeground(Color.WHITE);
         this.add(label_grass);
@@ -65,14 +69,14 @@ public class GameUIPanel extends JPanel {
         button_sheep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                r.BuySheep();
+                ranch.BuySheep();
             }
         });
 
         button_grass.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                r.BuyGrass();
+                ranch.BuyGrass();
             }
         });
 
@@ -84,11 +88,11 @@ public class GameUIPanel extends JPanel {
         return ranch;
     }
 
-    public void UIAnimation(){
-        if (nbmoney < ranch.getMoney()){
-            nbmoney++;
-        }  else if (nbmoney > ranch.getMoney()){
-            nbmoney--;
+    public void updateVariables(){
+        if (money < ranch.getMoney()){
+            money++;
+        }  else if (money > ranch.getMoney()){
+            money--;
         }
         if (nbsheep < ranch.getSheepFlock().size()){
             nbsheep++;
@@ -106,21 +110,10 @@ public class GameUIPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         //clear the panel
-        //update labels
-        for (Component c : this.getComponents()){
-            if (c instanceof JLabel){
-                JLabel label = (JLabel) c;
-                if (label.getText().contains("coins")){
-                    label.setText("number of coins : "+ nbmoney);
-                }
-                if (label.getText().contains("sheeps")){
-                    label.setText("number of sheeps : "+ nbsheep);
-                }
-                if (label.getText().contains("grasses")){
-                    label.setText("number of grasses : "+ nbgrass);
-                }
-            }
-        }
+
+        label_coin.setText("number of coins : "+ money);
+        label_sheep.setText("number of sheeps : "+ nbsheep);
+        label_grass.setText("number of grasses : "+ nbgrass);
 
     }
 

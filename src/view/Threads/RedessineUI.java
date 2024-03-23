@@ -17,7 +17,7 @@ public class RedessineUI extends Thread{
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
-            gameUIpanel.UIAnimation();
+            gameUIpanel.updateVariables();
         }
     }
 

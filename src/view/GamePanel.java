@@ -4,6 +4,9 @@ import model.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class GamePanel extends JPanel{
     private final ImageIcon rancherImageIcon;
@@ -73,25 +76,41 @@ public class GamePanel extends JPanel{
         Position rancherPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getRancher().getPosition(), rancherImageIcon);
         Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
 
+        //make copys
+        List<Sheep> sheepFlock =  new ArrayList<>(ranch.getSheepFlock());
+        List<Wool> wools = new ArrayList<>(ranch.getWools());
+        List<Grass> grasses = new ArrayList<>(ranch.getGrasses());
+
         //draw rancher
         g.drawImage(rancherImageIcon.getImage(), rancherPanelPosition.getX(), rancherPanelPosition.getY(), this);
         //draw wolf
         g.drawImage(wolfImageIcon.getImage(), wolfPanelPosition.getX(), wolfPanelPosition.getY(), this);
         //draw sheep
-        for (Sheep sheep : ranch.getSheepFlock()) {
+        for (Sheep sheep : sheepFlock) {
             Position sheepPanelPosition = RanchPositionToPanelPosition_Centered(sheep.getPosition(), sheepImageIcon);
             g.drawImage(sheepImageIcon.getImage(), sheepPanelPosition.getX(), sheepPanelPosition.getY(), this);
         }
         //draw wool
-        for (Wool wool : ranch.getWools()) {
+//        for (Wool wool : ranch.getWools()) {
+//            Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
+//            g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
+//        }
+//
+        for (Wool wool : wools) {
             Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
             g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
         }
-        //draw grass
-        for (Grass grass : ranch.getGrasses()) {
+
+        //change to iterator
+        for (Grass grass : grasses) {
             Position grassPanelPosition = RanchPositionToPanelPosition_Centered(grass.getPosition(), grassImageIcon);
             g.drawImage(grassImageIcon.getImage(), grassPanelPosition.getX(), grassPanelPosition.getY(), this);
         }
+//        //draw grass
+//        for (Grass grass : ranch.getGrasses()) {
+//            Position grassPanelPosition = RanchPositionToPanelPosition_Centered(grass.getPosition(), grassImageIcon);
+//            g.drawImage(grassImageIcon.getImage(), grassPanelPosition.getX(), grassPanelPosition.getY(), this);
+//        }
 
     }
 }

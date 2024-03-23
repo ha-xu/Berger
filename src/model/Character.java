@@ -96,15 +96,60 @@ public abstract class Character {
 
     //stay away from another character
     public void stayAway(Character character){
+        StopAllMoveDirections();
         if(position.getX() < character.getPosition().getX()){
             SetMoveDirection(Direction.LEFT);
-        }else{
+        }else if(position.getX() > character.getPosition().getX()){
             SetMoveDirection(Direction.RIGHT);
         }
         if(position.getY() < character.getPosition().getY()){
             SetMoveDirection(Direction.UP);
-        }else{
+        }else if(position.getY() > character.getPosition().getY()){
             SetMoveDirection(Direction.DOWN);
+        }
+    }
+
+    public void follow(Character character){
+        StopAllMoveDirections();
+        if(position.getX() < character.getPosition().getX()){
+            SetMoveDirection(Direction.RIGHT);
+        }else{
+            SetMoveDirection(Direction.LEFT);
+        }
+        if(position.getY() < character.getPosition().getY()){
+            SetMoveDirection(Direction.DOWN);
+        }else{
+            SetMoveDirection(Direction.UP);
+        }
+    }
+
+    public void follow(Position position){
+        StopAllMoveDirections();
+        if(this.position.getX() < position.getX()){
+            SetMoveDirection(Direction.RIGHT);
+        }else{
+            SetMoveDirection(Direction.LEFT);
+        }
+        if(this.position.getY() < position.getY()){
+            SetMoveDirection(Direction.DOWN);
+        }else{
+            SetMoveDirection(Direction.UP);
+        }
+    }
+
+    //stay in the ranch
+    public void stayInRanch(int characterWidth,int characterHeight, int ranchWidth, int ranchHeight){
+        if(position.getX() < characterWidth/2){
+            StopMoveDirection(Direction.LEFT);
+        }
+        if(position.getX() > ranchHeight - characterWidth/2){
+            StopMoveDirection(Direction.RIGHT);
+        }
+        if(position.getY() < characterHeight/2){
+            StopMoveDirection(Direction.UP);
+        }
+        if(position.getY() > ranchHeight - characterHeight/2){
+            StopMoveDirection(Direction.DOWN);
         }
     }
 }

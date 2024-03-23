@@ -5,6 +5,7 @@ import model.Direction;
 import model.Position;
 import model.Threads.SheepMove;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import static model.Probability.isTrue;
@@ -13,6 +14,8 @@ public class Sheep extends Character {
 
     public static final int  WIDTH = 70;
     public static final int HEIGHT = 70;
+
+    public static final int GRASS_EATING_DISTANCE = 40;
 
 
     private Ranch ranch;
@@ -44,7 +47,7 @@ public class Sheep extends Character {
     }
 
     //Méthode de déplacement aléatoire des moutons
-    public void Smove(){
+    public void randomMove(){
         boolean isMoving = isTrue(0.1);
         //System.out.println(isMoving);
         if (isMoving){
@@ -72,26 +75,34 @@ public class Sheep extends Character {
     //Méthode de déplacement des moutons, avec limite de la zone de déplacement
     @Override
     public void move(){
-        this.EatGrass();
+//        this.EatGrass();
         //vérifier dans sheepFlock si le tableau est vide ou pas pour produire des poils
-        if (ranch.sheepFlock.isEmpty()) {
-            return;
-        }else {
-            this.produirePoil();
+
+        this.produirePoil();
+
+        if(!ranch.getGrasses().isEmpty()){
+            Grass closestGrass = closestGrass();
+            followGrass(closestGrass);
+            if (this.distance(closestGrass.getPosition()) < GRASS_EATING_DISTANCE){
+                EatGrass(closestGrass);
+            }
+        }else{
+            randomMove();
         }
-        Smove();
-        if (this.getPosition().getX() > ranch.WIDTH){
-            super.StopMoveDirection(Direction.RIGHT);
-        }
-        if(this.getPosition().getX() < 0 ){
-            super.StopMoveDirection(Direction.LEFT);
-        }
-        if(this.getPosition().getY() > ranch.HEIGHT){
-            super.StopMoveDirection(Direction.DOWN);
-        }
-        if(this.getPosition().getY() < 0){
-            super.StopMoveDirection(Direction.UP);
-        }
+
+//        if (this.getPosition().getX() > ranch.WIDTH){
+//            super.StopMoveDirection(Direction.RIGHT);
+//        }
+//        if(this.getPosition().getX() < 0 ){
+//            super.StopMoveDirection(Direction.LEFT);
+//        }
+//        if(this.getPosition().getY() > ranch.HEIGHT){
+//            super.StopMoveDirection(Direction.DOWN);
+//        }
+//        if(this.getPosition().getY() < 0){
+//            super.StopMoveDirection(Direction.UP);
+//        }
+        stayInRanch(WIDTH, HEIGHT, ranch.WIDTH, ranch.HEIGHT);
         super.move();
     }
 
@@ -108,25 +119,36 @@ public class Sheep extends Character {
     /**
      * Production aléatoire des poils par les moutons*/
     public void produirePoil(){
-        boolean produitPoil = isTrue(0.1);
+        boolean produitPoil = isTrue(0.001);
         if(produitPoil){
             ranch.getWools().add(new Wool(new Position(this.getPosition().getX(), this.getPosition().getY())));
         }
     }
 
-    // Méthode de consommation de l'herbe par les moutons en cas de collision entre le sheep et le grass
-    public void EatGrass(){
+    //closestGrass width iterator
+    public Grass closestGrass(){
+        Grass closestGrass = null;
+        double minDistance = Double.MAX_VALUE;
         for (Grass grass : ranch.getGrasses()){
-            int distanceX = Math.abs(grass.getPosition().getX() - this.getPosition().getX());
-            int distanceY = Math.abs(grass.getPosition().getY() - this.getPosition().getY());
-            // Calcul de la distance entre le mouton et l'herbe
-            double  distance = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
-            // Si la distance est inférieure à 10, le mouton mange l'herbe
-            if (distance < 10){
-                ranch.getGrasses().remove(grass);
-                System.out.println("Grass eaten");
-                break;
+            double distance = this.distance(grass.getPosition());
+            if (distance < minDistance){
+                minDistance = distance;
+                closestGrass = grass;
             }
+        }
+        return closestGrass;
+    }
+
+
+    public void followGrass(Grass grass) {
+        if(grass != null) {
+            follow(grass.getPosition());
+        }
+    }
+    // Méthode de consommation de l'herbe par les moutons en cas de collision entre le sheep et le grass
+    public void EatGrass(Grass grass){
+        if(grass != null) {
+            ranch.getGrasses().remove(grass);
         }
     }
 

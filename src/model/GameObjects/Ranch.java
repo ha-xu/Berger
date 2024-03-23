@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Ranch {
 
-    public final double WIDTH = 1000;
-    public final double HEIGHT = 1000;
+    public final int WIDTH = 1000;
+    public final int HEIGHT = 1000;
 
     private int money = 550; //the money of the rancher
     private final int grassPrice = 10; //the price of grass
@@ -58,9 +58,7 @@ public class Ranch {
             money -= sheepPrice;
             Sheep newSheep = new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500)), this);
             sheepFlock.add(newSheep);
-            //pour le mouton acheté, lui ajouter un thread pour le déplacer
-            SheepMove newSheepMove = new SheepMove(newSheep);
-            newSheepMove.start();
+            newSheep.startMove();
         }
         else{
             System.out.println("You don't have enough money or you have reached the maximum number of sheep");

@@ -1,14 +1,17 @@
 package model.GameObjects;
 
 import model.Character;
-import model.Direction;
 import model.Position;
 import model.Threads.RancherMove;
 
+import java.util.Iterator;
+
 public class Rancher extends Character {
-    public static final double WIDTH = 80;
-    public static final double HEIGHT = 80;
-    public final double collectWoolRange = 50;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 80;
+    public static final int COLLECT_WOOL_RANGE = 50;
+
+    public static final int WOOL_MONEY = 10;
 
     private final Ranch ranch;
     private final RancherMove rancherMove = new RancherMove(this);
@@ -31,10 +34,12 @@ public class Rancher extends Character {
 
     //collect wool
     public void collectWool(){
-        for (Wool wool : ranch.getWools()) {
-            if (distance(wool.getPosition()) < collectWoolRange) {
-                ranch.getWools().remove(wool);
-                ranch.addMoney(10);
+        Iterator<Wool> woolIterator = ranch.getWools().iterator();
+        while (woolIterator.hasNext()) {
+            Wool wool = woolIterator.next();
+            if (distance(wool.getPosition()) < COLLECT_WOOL_RANGE) {
+                woolIterator.remove();
+                ranch.addMoney(WOOL_MONEY);
                 break;
             }
         }
@@ -47,18 +52,7 @@ public class Rancher extends Character {
 
     @Override
     public void move() {
-        if(super.getPosition().getX()<WIDTH/2){
-            super.StopMoveDirection(Direction.LEFT);
-        }
-        if(super.getPosition().getX()>ranch.WIDTH-WIDTH/2){
-            super.StopMoveDirection(Direction.RIGHT);
-        }
-        if(super.getPosition().getY()<HEIGHT/2){
-            super.StopMoveDirection(Direction.UP);
-        }
-        if(super.getPosition().getY()>ranch.HEIGHT-HEIGHT/2){
-            super.StopMoveDirection(Direction.DOWN);
-        }
+        stayInRanch(WIDTH, HEIGHT, ranch.WIDTH, ranch.HEIGHT);
         super.move();
     }
 

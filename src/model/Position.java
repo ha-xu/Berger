@@ -24,4 +24,8 @@ public class Position {
     public void setY(int y){
         this.y = y;
     }
+
+    public double distance(Position position){
+        return Math.sqrt(Math.pow(x - position.getX(), 2) + Math.pow(y - position.getY(), 2));
+    }
 }

@@ -13,10 +13,14 @@ public class Ranch {
 
     //possibility of generate wolf
     private final double GENERATE_WOLF_POSSIBILITY = 0.005;
-    private int money = 550; //the money of the rancher
     public static final int GRASS_PRICE = 10; //the price of grass
     public static final int SHEEP_PRICE = 100; //the price of sheep
     public static final int WOOL_MONEY = 30;
+
+    public static final int INITIAL_MONEY = 500;
+
+    private int money = INITIAL_MONEY; //the money of the rancher
+
 
     Rancher rancher;
     ArrayList<Wolf> wolves = new ArrayList<>();
@@ -43,8 +47,7 @@ public class Ranch {
         sheepFlock.add(new Sheep(new Position(150, 160),3, this));
         sheepFlock.add(new Sheep(new Position(470, 155),3, this));
         sheepFlock.add(new Sheep(new Position(170, 380),3, this));
-
-        wools.add(new Wool(new Position(190, 310)));
+        //wools.add(new Wool(new Position(190, 310)));
     }
 
     public void start(){

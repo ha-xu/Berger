@@ -73,7 +73,9 @@ public class GameUIPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 ranch.BuySheep();
 //                gamePanel.requestFocusInWindow();
+                ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
+
             }
         });
 
@@ -82,6 +84,7 @@ public class GameUIPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 ranch.BuyGrass();
 //                gamePanel.requestFocusInWindow();
+                ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
 
             }

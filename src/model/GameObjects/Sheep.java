@@ -108,6 +108,19 @@ public class Sheep extends Character {
         }
     }
 
+    //si le mouton a mangé 2 herbes et produit moins de 5 poils, il produira plus souvent des poils, sinon il produira moins souvent.
+    public void ProbaWool(){
+        if(NbEatenGrass == 2 && PoilsProduit < 5){
+            //System.out.println("NbEatenGrass: " + NbEatenGrass);
+            //System.out.println("PoilsProduit: " + PoilsProduit);
+            ProbaProduitPoil = 0.005;
+        }else if(NbEatenGrass > 2 && PoilsProduit >= 5){
+            ProbaProduitPoil = 0.001;
+            NbEatenGrass = 0;
+            PoilsProduit = 0;
+        }
+    }
+
     //Méthode de déplacement des moutons, avec limite de la zone de déplacement
     @Override
     public void move(){
@@ -127,15 +140,9 @@ public class Sheep extends Character {
         }else{
             randomMove();
         }
+        this.produirePoil();
 
-        if(NbEatenGrass == 2 && PoilsProduit < 5){
-            this.produirePoil();
-            ProbaProduitPoil = 0.1;
-        }else if(NbEatenGrass > 2 && PoilsProduit >= 5){
-            ProbaProduitPoil = 0.001;
-            NbEatenGrass = 0;
-            PoilsProduit = 0;
-        }
+        ProbaWool();
 
 //        if (this.getPosition().getX() > ranch.WIDTH){
 //            super.StopMoveDirection(Direction.RIGHT);
@@ -178,7 +185,8 @@ public class Sheep extends Character {
     public Grass closestGrass(){
         Grass closestGrass = null;
         double minDistance = Double.MAX_VALUE;
-        for (Grass grass : ranch.getGrasses()){
+        ArrayList<Grass> grasses = new ArrayList<>(ranch.getGrasses());
+        for (Grass grass : grasses){
             double distance = this.distance(grass.getPosition());
             if (distance < minDistance){
                 minDistance = distance;

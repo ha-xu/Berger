@@ -147,7 +147,7 @@ public class Sheep extends Character {
         stayInRanch(WIDTH, HEIGHT, ranch.WIDTH, ranch.HEIGHT);
         super.move();
     }
-    
+
     public void produirePoil(){
         boolean produitPoil = isTrue(ProbaProduitPoil);
         if(produitPoil){

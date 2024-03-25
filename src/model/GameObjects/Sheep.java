@@ -178,7 +178,8 @@ public class Sheep extends Character {
     public Grass closestGrass(){
         Grass closestGrass = null;
         double minDistance = Double.MAX_VALUE;
-        for (Grass grass : ranch.getGrasses()){
+        ArrayList<Grass> grasses = new ArrayList<>(ranch.getGrasses());
+        for (Grass grass : grasses){
             double distance = this.distance(grass.getPosition());
             if (distance < minDistance){
                 minDistance = distance;

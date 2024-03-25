@@ -11,7 +11,6 @@ public class Rancher extends Character {
     public static final int HEIGHT = 80;
     public static final int COLLECT_WOOL_RANGE = 50;
 
-    public static final int WOOL_MONEY = 10;
 
     private final Ranch ranch;
     private final RancherMove rancherMove = new RancherMove(this);
@@ -39,7 +38,7 @@ public class Rancher extends Character {
             Wool wool = woolIterator.next();
             if (distance(wool.getPosition()) < COLLECT_WOOL_RANGE) {
                 woolIterator.remove();
-                ranch.addMoney(WOOL_MONEY);
+                ranch.addMoney(Ranch.WOOL_MONEY);
                 break;
             }
         }

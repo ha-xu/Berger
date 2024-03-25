@@ -14,10 +14,9 @@ public class Ranch {
     //possibility of generate wolf
     private final double GENERATE_WOLF_POSSIBILITY = 0.005;
     private int money = 550; //the money of the rancher
-    private final int grassPrice = 10; //the price of grass
-    private final int sheepPrice = 100; //the price of sheep
-    private double maxSheep = 30; //the maximum number of sheep
-    private int maxWolf = 1; //the maximum number of wolf
+    public static final int GRASS_PRICE = 10; //the price of grass
+    public static final int SHEEP_PRICE = 100; //the price of sheep
+    public static final int WOOL_MONEY = 30;
 
     Rancher rancher;
     ArrayList<Wolf> wolves = new ArrayList<>();
@@ -80,8 +79,8 @@ public class Ranch {
 
     //combination avec le magasin (Alizée) et le mouton (Xi)
     public void BuySheep(){
-        if (money >= 100 && sheepFlock.size() < maxSheep){
-            money -= sheepPrice;
+        if (money >= SHEEP_PRICE){
+            money -= SHEEP_PRICE;
             Sheep newSheep = new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500)), this);
             sheepFlock.add(newSheep);
             newSheep.startMove();
@@ -93,8 +92,8 @@ public class Ranch {
 
     //Combinaison avec le magasin (Alizée) et l'herbe (Xi)
     public void BuyGrass(){
-        if (money >= 10){
-            money -= grassPrice;
+        if (money >= GRASS_PRICE){
+            money -= GRASS_PRICE;
             grasses.add(new Grass(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
         }
         else{

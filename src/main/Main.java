@@ -9,6 +9,8 @@ import view.GamePanel;
 import view.GameUIPanel;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Main {
 
@@ -30,32 +32,21 @@ public class Main {
         InputManager inputManager = new InputManager(ranch.getRancher());
 
         GamePanel panel = new GamePanel(ranch);
-        GameUIPanel uiPanel = new GameUIPanel(ranch);
+        GameUIPanel uiPanel = new GameUIPanel(frame, ranch);
 
         //start the ui thread to repaint the ui panel for animation
+        panel.startRedessine(); //start the thread to repaint the frame
         uiPanel.startRedessine();
         //ranch start means game start
         ranch.start();
 
-        frame.startRedessine(); //start the thread to repaint the frame
         frame.setLayout(new FlowLayout()); // 1行2列
         frame.add(panel);
         frame.add(uiPanel);
         frame.addKeyListener(inputManager);
         frame.pack();
+        frame.requestFocus();
 
-        //a thread to keep the frame focused
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(Redessine.REPAINT_INTERVAL);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                frame.requestFocus();
-
-            }
-        }).start();
     }
 
     public static void main(String[] args) {

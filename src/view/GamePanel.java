@@ -1,6 +1,7 @@
 package view;
 import model.GameObjects.*;
 import model.Position;
+import view.Threads.Redessine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,17 @@ public class GamePanel extends JPanel{
 
     private final Ranch ranch;
 
+    private Redessine redessine = new Redessine(this);
 
+    //start the thread
+    public void startRedessine(){
+        redessine.start();
+    }
+
+    //stop the thread
+    public void stopRedessine(){
+        redessine.Pause();
+    }
 
     public GamePanel(Ranch ranch){
         this.ranch = ranch;

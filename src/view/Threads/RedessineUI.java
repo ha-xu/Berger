@@ -3,7 +3,7 @@ package view.Threads;
 import view.GameUIPanel;
 
 public class RedessineUI extends Thread{
-    private GameUIPanel gameUIpanel;
+    private final GameUIPanel gameUIpanel;
     private boolean isRunning = true;
 
     public RedessineUI(GameUIPanel g){
@@ -18,6 +18,9 @@ public class RedessineUI extends Thread{
                 e.printStackTrace();
             }
             gameUIpanel.updateVariables();
+            gameUIpanel.revalidate();
+            gameUIpanel.repaint();
+
         }
     }
 

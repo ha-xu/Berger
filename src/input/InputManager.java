@@ -21,7 +21,7 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //System.out.println("keyPressed：" + KeyEvent.getKeyText(e.getKeyCode()));
+        System.out.println("keyPressed：" + KeyEvent.getKeyText(e.getKeyCode()));
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP: case KeyEvent.VK_W:
                 rancher.SetMoveDirection(Direction.UP);

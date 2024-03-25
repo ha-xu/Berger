@@ -19,6 +19,7 @@ public class GameUIPanel extends JPanel {
     private JLabel label_grass;
 
     //threads
+    private GameFrame frame;
     private final RedessineUI redessineUi = new RedessineUI(this);
 
     public void startRedessine(){
@@ -29,8 +30,9 @@ public class GameUIPanel extends JPanel {
         redessineUi.Pause();
     }
 
-    public GameUIPanel(Ranch r){
+    public GameUIPanel(GameFrame frame, Ranch r){
         this.ranch = r;
+        this.frame = frame;
         this.setPreferredSize(new Dimension(GameFrame.WIDTH-GameFrame.HEIGHT, GameFrame.HEIGHT));
         this.setLayout(null);
         this.setVisible(true);
@@ -70,6 +72,8 @@ public class GameUIPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ranch.BuySheep();
+//                gamePanel.requestFocusInWindow();
+                frame.requestFocus();
             }
         });
 
@@ -77,6 +81,9 @@ public class GameUIPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ranch.BuyGrass();
+//                gamePanel.requestFocusInWindow();
+                frame.requestFocus();
+
             }
         });
 

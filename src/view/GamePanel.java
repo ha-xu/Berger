@@ -5,6 +5,8 @@ import view.Threads.Redessine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,8 @@ public class GamePanel extends JPanel{
     private final ImageIcon sheepImageIcon;
     private final ImageIcon grassImageIcon;
     private final ImageIcon woolImageIcon;
+    private final ImageIcon fenceImageIcon;
+    private final ImageIcon fenceVerticaleIcon;
 
     private final Ranch ranch;
 
@@ -45,17 +49,31 @@ public class GamePanel extends JPanel{
         //set icon size
         rancherImageIcon.setImage(rancherImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
+        //set image fence (clôture) et sa taille
+        fenceImageIcon = new ImageIcon("src/images/fence.png");
+        fenceImageIcon.setImage(fenceImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Fence.WIDTH), RanchLengthToPanelLength(Fence.HEIGHT), Image.SCALE_DEFAULT));
+        // Fence Verticale
+        // Créer une nouvelle BufferedImage pour l'image de la clôture
+        int width = RanchLengthToPanelLength(Fence.WIDTH);
+        int height = RanchLengthToPanelLength(Fence.HEIGHT);
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        // Rotation de l'image de la clôture de 90 degrés
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(90), width / 2, height / 2);
+        g2d.setTransform(transform);
+        g2d.drawImage(fenceImageIcon.getImage(), 0, 0, null);
+        g2d.dispose();
+        fenceVerticaleIcon = new ImageIcon(bufferedImage);
+
 
         sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
-        //TODO: set sheep icon size
         sheepImageIcon.setImage(sheepImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Sheep.WIDTH), RanchLengthToPanelLength(Sheep.HEIGHT), Image.SCALE_DEFAULT));
 
         wolfImageIcon = new ImageIcon("src/images/wolfImage.png");
-        //TODO: wolf sheep icon size
         wolfImageIcon.setImage(wolfImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
         woolImageIcon = new ImageIcon("src/images/woolImage.png");
-        //TODO: set wool icon size
         woolImageIcon.setImage(woolImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Wool.WIDTH), RanchLengthToPanelLength(Wool.HEIGHT), Image.SCALE_DEFAULT));
 
         grassImageIcon = new ImageIcon("src/images/grassImage.png");
@@ -88,6 +106,7 @@ public class GamePanel extends JPanel{
 //        Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
 
         //make copys
+        List<Fence> Fences = new ArrayList<>(ranch.getFences());
         List<Sheep> sheepFlock =  new ArrayList<>(ranch.getSheepFlock());
         List<Wolf> wolves = new ArrayList<>(ranch.getWolves());
         List<Wool> wools = new ArrayList<>(ranch.getWools());
@@ -118,6 +137,12 @@ public class GamePanel extends JPanel{
         for (Wool wool : wools) {
             Position woolPanelPosition = RanchPositionToPanelPosition_Centered(wool.getPosition(), woolImageIcon);
             g.drawImage(woolImageIcon.getImage(), woolPanelPosition.getX(), woolPanelPosition.getY(), this);
+        }
+
+        //draw fences
+        for(Fence fence : Fences){
+            Position fencePanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fenceImageIcon);
+            g.drawImage(fenceImageIcon.getImage(), fencePanelPosition.getX(), fencePanelPosition.getY(), this);
         }
 
         //change to iterator

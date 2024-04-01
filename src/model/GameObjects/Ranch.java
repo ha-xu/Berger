@@ -4,7 +4,10 @@ import model.Position;
 import model.Probability;
 import model.Threads.RanchMove;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static model.GameObjects.Fence.TypeFence.HORIZONTALE;
 
 public class Ranch {
 
@@ -29,6 +32,7 @@ public class Ranch {
     ArrayList<Wool> wools = new ArrayList<>();
 
     ArrayList<Grass> grasses = new ArrayList<>();
+    ArrayList<Fence> fences = new ArrayList<>();
 
     RanchMove ranchMove = new RanchMove(this);
 
@@ -47,6 +51,7 @@ public class Ranch {
         sheepFlock.add(new Sheep(new Position(150, 160),3, this));
         sheepFlock.add(new Sheep(new Position(470, 155),3, this));
         sheepFlock.add(new Sheep(new Position(170, 380),3, this));
+        fences.add(new Fence(new Position(500, 500), HORIZONTALE));
         //wools.add(new Wool(new Position(190, 310)));
     }
 
@@ -126,6 +131,10 @@ public class Ranch {
 
     public ArrayList<Grass> getGrasses() {
         return grasses;
+    }
+
+    public ArrayList<Fence> getFences() {
+        return fences;
     }
 
     //add wool money

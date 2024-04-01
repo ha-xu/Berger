@@ -1,5 +1,7 @@
 package model;
 
+import model.GameObjects.Fence;
+
 public abstract class Character {
 
 
@@ -106,6 +108,20 @@ public abstract class Character {
             SetMoveDirection(Direction.UP);
         }else if(position.getY() > character.getPosition().getY()){
             SetMoveDirection(Direction.DOWN);
+        }
+    }
+
+    //Clôture untouchable par les autres character.
+    public void FenteUntouchable(Fence fence){
+        StopAllMoveDirections();
+        if(position.getX() < fence.getPosition().getX() && distance(fence.getPosition()) < 50){
+            StopMoveDirection(Direction.RIGHT);
+        }else if(position.getX() > fence.getPosition().getX() && distance(fence.getPosition()) < 50){
+            StopMoveDirection(Direction.LEFT);
+        }else if(position.getY() < fence.getPosition().getY() && distance(fence.getPosition()) < 50){
+            StopMoveDirection(Direction.DOWN);
+        }else if(position.getY() > fence.getPosition().getY() && distance(fence.getPosition()) < 50){
+            StopMoveDirection(Direction.UP);
         }
     }
 

@@ -83,6 +83,13 @@ public class Sheep extends Character {
         }
     }
 
+    //Moutons ne peuvent pas toucher les clôtures en utilisant FenteUntouchable
+    public void NoTouchFence(){
+        for (Fence fence : ranch.getFences()){
+            FenteUntouchable(fence);
+        }
+    }
+
     //Lors d'une rencontre d'un des loups, le mouton fuira. On évite que les moutons se superposent.
     public boolean stayAwayFromOthers(){
         boolean isAway = true;

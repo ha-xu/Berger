@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static model.GameObjects.Fence.TypeFence.HORIZONTALE;
+import static model.GameObjects.Fence.TypeFence.VERTICALE;
 
 public class Ranch {
 
@@ -52,6 +53,7 @@ public class Ranch {
         sheepFlock.add(new Sheep(new Position(470, 155),3, this));
         sheepFlock.add(new Sheep(new Position(170, 380),3, this));
         fences.add(new Fence(new Position(500, 500), HORIZONTALE));
+        fences.add(new Fence(new Position(550, 450), VERTICALE));
         //wools.add(new Wool(new Position(190, 310)));
     }
 

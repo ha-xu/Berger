@@ -2,6 +2,8 @@ package model;
 
 import model.GameObjects.Fence;
 
+import java.util.ArrayList;
+
 public abstract class Character {
 
 
@@ -112,16 +114,32 @@ public abstract class Character {
     }
 
     //Clôture untouchable par les autres character.
-    public void FenteUntouchable(Fence fence){
-        StopAllMoveDirections();
-        if(position.getX() < fence.getPosition().getX() && distance(fence.getPosition()) < 50){
-            StopMoveDirection(Direction.RIGHT);
-        }else if(position.getX() > fence.getPosition().getX() && distance(fence.getPosition()) < 50){
-            StopMoveDirection(Direction.LEFT);
-        }else if(position.getY() < fence.getPosition().getY() && distance(fence.getPosition()) < 50){
-            StopMoveDirection(Direction.DOWN);
-        }else if(position.getY() > fence.getPosition().getY() && distance(fence.getPosition()) < 50){
-            StopMoveDirection(Direction.UP);
+    public void FenceUntouchable(Fence fence){
+        int disx = 0;
+        int disy = 0;
+        if(fence.getType() == Fence.TypeFence.HORIZONTALE ) {
+            disx = 100;
+            disy = 80;
+        }else{
+            disx = 80;
+            disy = 100;
+        }
+        if(position.getX() < fence.getPosition().getX() && distance(fence.getPosition()) < disx){
+            SetMoveDirection(Direction.LEFT);
+            System.out.println(disx);
+            System.out.println(fence.getType());
+        }
+        if(position.getX() > fence.getPosition().getX() && distance(fence.getPosition()) < disx){
+            SetMoveDirection(Direction.RIGHT);
+            System.out.println(disx);
+        }
+        if(position.getY() < fence.getPosition().getY() && distance(fence.getPosition()) < disy){
+            SetMoveDirection(Direction.UP);
+            System.out.println(disy);
+        }
+        if(position.getY() > fence.getPosition().getY() && distance(fence.getPosition()) < disy){
+            SetMoveDirection(Direction.DOWN);
+            System.out.println(disy);
         }
     }
 

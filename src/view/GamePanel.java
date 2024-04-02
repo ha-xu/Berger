@@ -52,6 +52,7 @@ public class GamePanel extends JPanel{
         //set image fence (clôture) et sa taille
         fenceImageIcon = new ImageIcon("src/images/fence.png");
         fenceImageIcon.setImage(fenceImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Fence.WIDTH), RanchLengthToPanelLength(Fence.HEIGHT), Image.SCALE_DEFAULT));
+
         // Fence Verticale
         // Créer une nouvelle BufferedImage pour l'image de la clôture
         int width = RanchLengthToPanelLength(Fence.WIDTH);
@@ -65,6 +66,7 @@ public class GamePanel extends JPanel{
         g2d.drawImage(fenceImageIcon.getImage(), 0, 0, null);
         g2d.dispose();
         fenceVerticaleIcon = new ImageIcon(bufferedImage);
+        fenceVerticaleIcon.setImage(fenceVerticaleIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Fence.WIDTH), RanchLengthToPanelLength(Fence.HEIGHT), Image.SCALE_DEFAULT));
 
 
         sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
@@ -141,8 +143,13 @@ public class GamePanel extends JPanel{
 
         //draw fences
         for(Fence fence : Fences){
-            Position fencePanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fenceImageIcon);
-            g.drawImage(fenceImageIcon.getImage(), fencePanelPosition.getX(), fencePanelPosition.getY(), this);
+            if(fence.getType() == Fence.TypeFence.HORIZONTALE) {
+                Position fencePanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fenceImageIcon);
+                g.drawImage(fenceImageIcon.getImage(), fencePanelPosition.getX(), fencePanelPosition.getY(), this);
+            }else if(fence.getType() == Fence.TypeFence.VERTICALE){
+                Position fenceVPanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fenceVerticaleIcon);
+                g.drawImage(fenceVerticaleIcon.getImage(), fenceVPanelPosition.getX(), fenceVPanelPosition.getY(), this);
+            }
         }
 
         //change to iterator

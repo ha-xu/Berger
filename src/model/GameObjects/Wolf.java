@@ -4,6 +4,8 @@ import model.Character;
 import model.Position;
 import model.Threads.WolfMove;
 
+import java.util.ArrayList;
+
 public class Wolf extends Character {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 70;
@@ -74,6 +76,16 @@ public class Wolf extends Character {
         }
     }
 
+    //La clôture ne peut pas touché par le loup
+    public void NoTouchFence(){
+        ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
+        for (Fence fence : fences){
+            if(!runningAway) {
+                FenceUntouchable(fence);
+            }
+        }
+    }
+
 //    public void runAwayFromRancher(int safeDistance){
 //        if(distance(ranch.getRancher())<safeDistance){
 //            stayAway(ranch.getRancher());
@@ -83,8 +95,8 @@ public class Wolf extends Character {
     public void WolfActions(){
         if(runningAway){
             runAwayFromRancher();
-        }else
-        if(distance(ranch.getRancher())<CLOSEST_DISTANCE_FROM_RANCHER){
+            NoTouchFence();
+        }else if(distance(ranch.getRancher())<CLOSEST_DISTANCE_FROM_RANCHER){
             runningAway = true;
         }else if(!ranch.getSheepFlock().isEmpty()){
             Sheep nearestSheep = nearestSheep();

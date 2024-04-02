@@ -67,6 +67,8 @@ public class Sheep extends Character {
         produirePoil();
         ProbaWool();
         if(stayAwayFromOthers()){
+            //Appel NoToucheFence pour que le mouton ne touche pas la fence
+            NoTouchFence();
             if(!ranch.getGrasses().isEmpty()){
                 Grass closestGrass = closestGrass();
                 followGrass(closestGrass);
@@ -85,8 +87,9 @@ public class Sheep extends Character {
 
     //Moutons ne peuvent pas toucher les clôtures en utilisant FenteUntouchable
     public void NoTouchFence(){
-        for (Fence fence : ranch.getFences()){
-            FenteUntouchable(fence);
+        ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
+        for (Fence fence : fences){
+            FenceUntouchable(fence);
         }
     }
 

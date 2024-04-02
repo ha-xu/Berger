@@ -19,8 +19,10 @@ public class Ranch {
 
     public static final int INITIAL_MONEY = 500;
 
-    private int money = INITIAL_MONEY; //the money of the rancher
+    public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
 
+    private int money = INITIAL_MONEY; //the money of the rancher
+    private int date = 1; //the date of the game
 
     Rancher rancher;
     ArrayList<Wolf> wolves = new ArrayList<>();
@@ -75,8 +77,21 @@ public class Ranch {
 
     //ranch move
     public void move(){
-        if(Probability.isTrue(GENERATE_WOLF_POSSIBILITY) && wolves.isEmpty()&& !sheepFlock.isEmpty()){
-            AddWolf(1);
+        if(date % 2 == 0){
+            AddWolf(date );
+        }
+    }
+    private int datetimecount = DATE_TIME;
+
+    public int getDate() {
+        return date;
+    }
+
+    public void dateRun(int updateInterval){
+        datetimecount -= updateInterval;
+        if(datetimecount <= 0){
+            date++;
+            datetimecount = DATE_TIME;
         }
     }
 

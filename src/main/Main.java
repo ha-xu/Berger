@@ -2,11 +2,8 @@ package main;
 
 import input.InputManager;
 import model.GameObjects.Ranch;
-import view.GameMenuPanel;
+import view.*;
 import view.Threads.Redessine;
-import view.GameFrame;
-import view.GamePanel;
-import view.GameUIPanel;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -46,11 +43,18 @@ public class Main {
         frame.addKeyListener(inputManager);
         frame.pack();
         frame.requestFocus();
+    }
 
+    public static void GameStop(){
+        frame.getContentPane().removeAll();
+        frame.setLayout(new FlowLayout());
+        frame.add(new GameFinishPanel());
+        frame.pack();
     }
 
     public static void main(String[] args) {
         ShowMenu();
-//        GameStart();
+         //GameStart();
+//        GameStop();
     }
 }

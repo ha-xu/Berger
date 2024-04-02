@@ -19,6 +19,7 @@ public class RanchMove extends Thread{
                 e.printStackTrace();
             }
             ranch.move();
+            ranch.dateRun(Redessine.REPAINT_INTERVAL);
         }
     }
 

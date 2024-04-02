@@ -6,39 +6,32 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class GameMenuPanel extends JPanel {
+public class GameFinishPanel extends JPanel {
 
-    public GameMenuPanel() {
-        //set size
-
-        JLabel label = new JLabel("RANCHER");
-        JButton startButton = new JButton("Start");
+    public GameFinishPanel(){
+        JLabel label = new JLabel("Game Over");
+        JButton restartButton = new JButton("Restart");
         JButton quitButton = new JButton("Quit");
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
 
-        //Set the properties of the label
         label.setFont(new Font("Consola", Font.BOLD, 25));
         label.setForeground(Color.ORANGE);
-        label.setBorder(new EmptyBorder(0, 0, 10, 0));  //set the padding of the label
+        label.setBorder(new EmptyBorder(0, 0, 10, 0));
 
-        //Set the alignements of the label and the button
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        restartButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(Box.createVerticalGlue());
         this.add(label);
-        this.add(startButton);
+        this.add(restartButton);
         this.add(quitButton);
         this.add(Box.createVerticalGlue());
 
         this.setVisible(true);
-        //add a listener to the button
-        startButton.addActionListener(evt -> Main.GameStart());
+        restartButton.addActionListener(evt -> Main.GameStart());
         quitButton.addActionListener(evt -> System.exit(0));
-
     }
-
 }

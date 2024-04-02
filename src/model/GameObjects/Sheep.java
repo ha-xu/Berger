@@ -89,10 +89,13 @@ public class Sheep extends Character {
         ArrayList<Wolf> wolves = new ArrayList<>(ranch.getWolves());
         ArrayList<Sheep> sheepFlock = new ArrayList<>(ranch.getSheepFlock());
         for (Wolf wolf : wolves){
-            if (this.distance(wolf.getPosition()) < CLOSEST_DISTANCE_FROM_WOLF){
-                stayAway(wolf);
-                isAway = false;
+            if(wolf != null){
+                if (this.distance(wolf.getPosition()) < CLOSEST_DISTANCE_FROM_WOLF){
+                    stayAway(wolf);
+                    isAway = false;
+                }
             }
+
         }
         for (Sheep sheep : sheepFlock){
             if (sheep != this){

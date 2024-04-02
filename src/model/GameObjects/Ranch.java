@@ -24,6 +24,7 @@ public class Ranch {
     private int money = INITIAL_MONEY; //the money of the rancher
     private int date = 1; //the date of the game
 
+    private int wolfCount = 0;
     Rancher rancher;
     ArrayList<Wolf> wolves = new ArrayList<>();
     ArrayList<Sheep> sheepFlock = new ArrayList<>();
@@ -75,11 +76,10 @@ public class Ranch {
         }
     }
 
+    boolean daychanged = false;
     //ranch move
     public void move(){
-        if(date % 2 == 0){
-            AddWolf(date );
-        }
+
     }
     private int datetimecount = DATE_TIME;
 
@@ -92,6 +92,10 @@ public class Ranch {
         if(datetimecount <= 0){
             date++;
             datetimecount = DATE_TIME;
+
+            if(date % 2 == 0){
+                AddWolf(date);
+            }
         }
     }
 
@@ -169,9 +173,9 @@ public class Ranch {
         }
     }
 
-    private void AddWolf(int nbWolf){
-        for (int i = 0; i < nbWolf; i++) {
-            Wolf wolf = new Wolf(randomPositionOutsideRanch(30), 6,this);
+    private void AddWolf(int wolfCount){
+        for (int i = 0; i < wolfCount; i++) {
+            Wolf wolf = new Wolf(randomPositionOutsideRanch(30), 6, this);
             wolves.add(wolf);
             wolf.startMove();
         }

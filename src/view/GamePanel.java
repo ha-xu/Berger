@@ -5,6 +5,8 @@ import view.Threads.Redessine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -87,6 +89,23 @@ public class GamePanel extends JPanel{
         Color.RGBtoHSB(167, 238, 145, hsb);
         this.setBackground(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
 
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Position ranchPosition = panelPositionToRanchPosition(new Position(e.getX(), e.getY()));
+                ranch.addFence(ranchPosition, Fence.TypeFence.HORIZONTALE); // Ajouter une clôture à la position du clic
+                repaint(); // Redessiner le panneau pour afficher la nouvelle clôture
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                // Convertir la position de la souris en position de ranch
+                Position ranchPosition = panelPositionToRanchPosition(new Position(e.getX(), e.getY()));
+
+            }
+        });
+
     }
 
     int RanchLengthToPanelLength(double length){
@@ -100,6 +119,34 @@ public class GamePanel extends JPanel{
     Position RanchPositionToPanelPosition_Centered(Position position,ImageIcon icon){
         return new Position((int) (((double) position.getX()/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT) - icon.getIconWidth()/2, (int) ( ((double) position.getY()/(double)ranch.HEIGHT)*(double)GameFrame.HEIGHT) - icon.getIconHeight()/2);
     }
+
+    //Convertir les coordonnées de la souris dans
+    //le panneau de jeu en coordonnées correspondantes dans le ranch
+    private Position panelPositionToRanchPosition(Position panelPosition) {
+        double ranchX = (double) panelPosition.getX() * (double) ranch.WIDTH / (double) GameFrame.HEIGHT;
+        double ranchY = (double) panelPosition.getY() * (double) ranch.HEIGHT / (double) GameFrame.HEIGHT;
+        return new Position((int) ranchX, (int) ranchY);
+    }
+
+    //Dessiner la rayon sélectionner par la souris en bleu transparente
+    private void drawSelectedArea(Graphics g, Position cursorPosition) {
+        // Convertir les coordonnées du curseur en coordonnées du ranch
+        Position ranchPosition = panelPositionToRanchPosition(cursorPosition);
+
+        // Dessiner un rectangle semi-transparent autour de la position du ranch
+        int ranchX = RanchLengthToPanelLength(ranchPosition.getX());
+        int ranchY = RanchLengthToPanelLength(ranchPosition.getY());
+        int ranchWidth = RanchLengthToPanelLength(Fence.WIDTH); // Largeur de la case
+        int ranchHeight = RanchLengthToPanelLength(Fence.HEIGHT); // Hauteur de la case
+
+        // Définir la couleur semi-transparente
+        g.setColor(new Color(0, 0, 255, 100)); // Rouge avec une opacité de 100
+
+        // Dessiner le rectangle semi-transparent
+        g.fillRect(ranchX, ranchY, ranchWidth, ranchHeight);
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -150,6 +197,21 @@ public class GamePanel extends JPanel{
                 Position fenceVPanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fenceVerticaleIcon);
                 g.drawImage(fenceVerticaleIcon.getImage(), fenceVPanelPosition.getX(), fenceVPanelPosition.getY(), this);
             }
+        }
+
+        /** Dessiner la zone sélectionnée par le curseur*/
+        // Récupérer la position de la souris dans le panneau
+        Point mousePoint = getMousePosition();
+        if (mousePoint != null) {
+            // Convertir la position de la souris en position de ranch
+            Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
+
+            // Dessiner une indication visuelle autour de la position de la souris
+            int fenceWidth = Fence.WIDTH/2; // Largeur de la clôture
+            int fenceHeight = Fence.HEIGHT/4; // Hauteur de la clôture
+            int indicatorSize = Math.min(fenceWidth, fenceHeight); // Taille de l'indicateur (utilisez la plus petite dimension)
+            g.setColor(new Color(0, 255, 255, 100)); // Couleur de l'indication visuelle (rouge semi-transparent)
+            g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight); // Dessiner un rectangle autour de la position de la souris
         }
 
         //change to iterator

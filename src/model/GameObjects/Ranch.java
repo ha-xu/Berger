@@ -172,4 +172,12 @@ public class Ranch {
             wolf.startMove();
         }
     }
+
+    //ajouter la clôture (position est choisi par le curseur par
+    // la fonction définie dans GamePanel).
+    public void addFence(Position position, Fence.TypeFence type){
+        Fence newFence = new Fence(position, type);
+        fences.add(newFence);
+    }
+
 }

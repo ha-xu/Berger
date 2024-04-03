@@ -80,7 +80,7 @@ public class Wolf extends Character {
     public void NoTouchFence(){
         ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
         for (Fence fence : fences){
-            if(!runningAway) {
+            if(runningAway) {
                 FenceUntouchable(fence);
             }
         }

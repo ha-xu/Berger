@@ -19,7 +19,7 @@ public class GameMenuPanel extends JPanel {
         this.setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
 
         //Set the properties of the label
-        label.setFont(new Font("Consola", Font.BOLD, 25));
+        label.setFont(new Font("Consola", Font.BOLD, 35));
         label.setForeground(Color.ORANGE);
         label.setBorder(new EmptyBorder(0, 0, 10, 0));  //set the padding of the label
 

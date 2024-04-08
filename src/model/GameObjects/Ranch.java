@@ -1,5 +1,6 @@
 package model.GameObjects;
 
+import main.Main;
 import model.Position;
 import model.Probability;
 import model.Threads.RanchMove;
@@ -20,6 +21,8 @@ public class Ranch {
     public static final int INITIAL_MONEY = 500;
 
     public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
+
+    public static final int WIN_DAYS = 30;
 
     private int money = INITIAL_MONEY; //the money of the rancher
     private int date = 1; //the date of the game
@@ -79,8 +82,27 @@ public class Ranch {
     boolean daychanged = false;
     //ranch move
     public void move(){
+        //when all the sheep are eaten, the player loses
+        if(this.sheepFlock.isEmpty()){
+            GameLose();
+        }
 
+        //when the date is 30, the player wins
+        if(date >= WIN_DAYS){
+            GameWin();
+        }
     }
+
+    private void GameWin() {
+        stopMove();
+        Main.GameStop(true,this);
+    }
+
+    private void GameLose() {
+        stopMove();
+        Main.GameStop(false,this);
+    }
+
     private int datetimecount = DATE_TIME;
 
     public int getDate() {
@@ -94,7 +116,7 @@ public class Ranch {
             datetimecount = DATE_TIME;
 
             if(date % 2 == 0){
-                AddWolf(date);
+                AddWolf(date / 2);
             }
         }
     }

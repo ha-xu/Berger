@@ -45,16 +45,16 @@ public class Main {
         frame.requestFocus();
     }
 
-    public static void GameStop(){
+    public static void GameStop(boolean isWin, Ranch ranch) {
         frame.getContentPane().removeAll();
         frame.setLayout(new FlowLayout());
-        frame.add(new GameFinishPanel());
+        frame.add(new GameFinishPanel(isWin, ranch));
         frame.pack();
     }
 
     public static void main(String[] args) {
         ShowMenu();
          //GameStart();
-//        GameStop();
+//        GameStop(true, new Ranch());
     }
 }

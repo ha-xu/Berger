@@ -24,7 +24,7 @@ public class Ranch {
     public static final int INITIAL_MONEY = 500;
 
     public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
-    public static final int FENCE_LIFE = 2;
+    public static final int FENCE_LIFE = 5;
     public static final int WIN_DAYS = 30;
 
     public static final int WIN_SHEEP_COUNT = 10;

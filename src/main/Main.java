@@ -50,10 +50,11 @@ public class Main {
         SoundPlayer.playBackGroundSound();
     }
 
-    public static void GameStop(boolean isWin, Ranch ranch) {
+    public static void GameStop(boolean isWin, Ranch ranch,String message) {
+        ranch.stop();
         frame.getContentPane().removeAll();
         frame.setLayout(new FlowLayout());
-        frame.add(new GameFinishPanel(isWin, ranch));
+        frame.add(new GameFinishPanel(isWin, ranch, message));
         frame.pack();
 
         //stop background sound

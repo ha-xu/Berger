@@ -11,9 +11,8 @@ public class GameFinishPanel extends JPanel {
 
 
 
-    public GameFinishPanel(boolean win, Ranch ranch){
+    public GameFinishPanel(boolean win, Ranch ranch,String message){
         String title = win ? "You Win" : "Game Over";
-        String message = win ? "Congratulations! Your ranch survived for " + Ranch.DATE_TIME + " days!" : "All your sheep are been eaten by the wolf!";
         int money = ranch.getMoney();
         int sheepNb = ranch.getSheepFlock().size();
 

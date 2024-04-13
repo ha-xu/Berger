@@ -62,7 +62,7 @@ public class Wolf extends Character {
         System.out.println("Wolf ate a sheep");
         sheep.stopMove();
         ranch.getSheepFlock().remove(sheep);
-        SoundPlayer.playEatSound();
+        SoundPlayer.playWolfEatSound();
     }
 
     //run away from rancher

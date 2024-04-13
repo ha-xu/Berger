@@ -2,6 +2,7 @@ package model.GameObjects;
 
 import model.Character;
 import model.Position;
+import model.SoundPlayer;
 import model.Threads.RancherMove;
 
 import java.util.Iterator;
@@ -39,6 +40,8 @@ public class Rancher extends Character {
             if (distance(wool.getPosition()) < COLLECT_WOOL_RANGE) {
                 woolIterator.remove();
                 ranch.addMoney(Ranch.WOOL_MONEY);
+
+                SoundPlayer.playPickSound();
                 break;
             }
         }

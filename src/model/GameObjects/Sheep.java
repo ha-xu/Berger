@@ -131,7 +131,7 @@ public class Sheep extends Character {
         //vérifier dans sheepFlock si le tableau est vide ou pas pour produire des poils
 
         sheepActions();
-        playSoundRandomly(0.001);
+//        playSoundRandomly(0.001);
 
 //        if (this.getPosition().getX() > ranch.WIDTH){
 //            super.StopMoveDirection(Direction.RIGHT);
@@ -154,6 +154,9 @@ public class Sheep extends Character {
         boolean produitPoil = isTrue(ProbaProduitPoil);
         if(produitPoil){
             ranch.getWools().add(new Wool(new Position(this.getPosition().getX(), this.getPosition().getY())));
+
+            SoundPlayer.playSheepSound();
+
             PoilsProduit++;
         }
     }
@@ -182,6 +185,7 @@ public class Sheep extends Character {
     // Méthode de consommation de l'herbe par les moutons en cas de collision entre le sheep et le grass
     public void EatGrass(Grass grass){
         if(grass != null) {
+            SoundPlayer.playSheepEatSound();
             ranch.getGrasses().remove(grass);
         }
     }

@@ -1,6 +1,7 @@
 package view;
 
 import model.GameObjects.Ranch;
+import model.SoundPlayer;
 import view.Threads.RedessineUI;
 
 import javax.swing.*;
@@ -75,11 +76,13 @@ public class GameUIPanel extends JPanel {
         button_sheep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 ranch.BuySheep();
 //                gamePanel.requestFocusInWindow();
                 ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
 
+                SoundPlayer.playBuySound();
             }
         });
 
@@ -90,6 +93,7 @@ public class GameUIPanel extends JPanel {
 //                gamePanel.requestFocusInWindow();
                 ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
+                SoundPlayer.playBuySound();
 
             }
         });

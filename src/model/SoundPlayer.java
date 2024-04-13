@@ -51,8 +51,12 @@ public class SoundPlayer {
         stopSound(backgroundClip);
     }
 
-    public static void playEatSound() {
+    public static void playWolfEatSound() {
         playSound("bite");
+    }
+
+    public static void playSheepEatSound() {
+        playSound("sheepeat");
     }
 
     public static void playGameOverSound() {
@@ -66,5 +70,19 @@ public class SoundPlayer {
     public static void playSheepSound() {
         playSound("sheep");
     }
+
+    public static void playWolfSound() {
+        playSound("wolf");
+    }
+
+    public static void playPickSound() {
+        playSound("pick");
+    }
+
+    public static void playBuySound(){
+        playSound("buy");
+    }
+
+
 
 }

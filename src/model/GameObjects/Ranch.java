@@ -3,6 +3,7 @@ package model.GameObjects;
 import main.Main;
 import model.Position;
 import model.Probability;
+import model.SoundPlayer;
 import model.Threads.RanchMove;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class Ranch {
     public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
 
     public static final int WIN_DAYS = 30;
+
+    public static final int WIN_SHEEP_COUNT = 10;
 
     private int money = INITIAL_MONEY; //the money of the rancher
     private int date = 1; //the date of the game
@@ -84,23 +87,27 @@ public class Ranch {
     public void move(){
         //when all the sheep are eaten, the player loses
         if(this.sheepFlock.isEmpty()){
-            GameLose();
+            GameLose("All the sheep are eaten by the wolves!");
         }
 
         //when the date is 30, the player wins
-        if(date >= WIN_DAYS){
-            GameWin();
+        if(date >= WIN_DAYS && sheepFlock.size() >= WIN_SHEEP_COUNT){
+            GameWin("You have survived for " + WIN_DAYS + " days and have more than " + WIN_SHEEP_COUNT + " sheep");
+        }
+
+        if(date >= WIN_DAYS && sheepFlock.size() < WIN_SHEEP_COUNT){
+            GameLose("You have survived for " + WIN_DAYS + " days but have less than " + WIN_SHEEP_COUNT + " sheep");
         }
     }
 
-    private void GameWin() {
+    private void GameWin(String winReason) {
         stopMove();
-        Main.GameStop(true,this);
+        Main.GameStop(true,this,winReason);
     }
 
-    private void GameLose() {
+    private void GameLose(String loseReason) {
         stopMove();
-        Main.GameStop(false,this);
+        Main.GameStop(false,this,loseReason);
     }
 
     private int datetimecount = DATE_TIME;
@@ -196,6 +203,7 @@ public class Ranch {
     }
 
     private void AddWolf(int wolfCount){
+        SoundPlayer.playWolfSound();
         for (int i = 0; i < wolfCount; i++) {
             Wolf wolf = new Wolf(randomPositionOutsideRanch(30), 6, this);
             wolves.add(wolf);

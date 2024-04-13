@@ -24,6 +24,8 @@ public class GamePanel extends JPanel{
 
     private final Ranch ranch;
 
+    private static int TypeFence;
+
     private Redessine redessine = new Redessine(this);
 
     //start the thread
@@ -38,6 +40,8 @@ public class GamePanel extends JPanel{
 
     public GamePanel(Ranch ranch){
         this.ranch = ranch;
+        this.TypeFence = -1;// Un chiffre ni 0 ni 1 pour dire qu'il n'a pas reçu un type
+
 
         //log
         System.out.println("GamePanel");
@@ -90,21 +94,41 @@ public class GamePanel extends JPanel{
         this.setBackground(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
 
         addMouseListener(new MouseAdapter() {
+            private boolean mousePressed = false;
+            private Position clickPosition;
+
             @Override
-            public void mouseClicked(MouseEvent e) {
-                Position ranchPosition = panelPositionToRanchPosition(new Position(e.getX(), e.getY()));
-                ranch.addFence(ranchPosition, Fence.TypeFence.HORIZONTALE); // Ajouter une clôture à la position du clic
-                repaint(); // Redessiner le panneau pour afficher la nouvelle clôture
+            public void mousePressed(MouseEvent e) {
+                mousePressed = true;
+                clickPosition = new Position(e.getX(), e.getY());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (mousePressed && TypeFence != -1) {
+                    if (TypeFence == 0) {
+                        Position ranchPosition = panelPositionToRanchPosition(clickPosition);
+                        ranch.addFence(ranchPosition, Fence.TypeFence.HORIZONTALE); // Ajouter une clôture à la position du clic
+                    } else if (TypeFence == 1) {
+                        Position ranchPosition = panelPositionToRanchPosition(clickPosition);
+                        ranch.addFence(ranchPosition, Fence.TypeFence.VERTICALE); // Ajouter une clôture à la position du clic
+                    }
+                    TypeFence = -1; // Une fois ajouté, on réinitialise son type à rien
+                    repaint(); // Redessiner le panneau pour afficher la nouvelle clôture
+
+                }
+                mousePressed = false;
             }
         });
+
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 // Convertir la position de la souris en position de ranch
                 Position ranchPosition = panelPositionToRanchPosition(new Position(e.getX(), e.getY()));
-
             }
         });
+
 
     }
 
@@ -129,6 +153,8 @@ public class GamePanel extends JPanel{
     }
 
     //Dessiner la rayon sélectionner par la souris en bleu transparente
+    //Ca a l'air inutile
+    /**
     private void drawSelectedArea(Graphics g, Position cursorPosition) {
         // Convertir les coordonnées du curseur en coordonnées du ranch
         Position ranchPosition = panelPositionToRanchPosition(cursorPosition);
@@ -144,16 +170,19 @@ public class GamePanel extends JPanel{
 
         // Dessiner le rectangle semi-transparent
         g.fillRect(ranchX, ranchY, ranchWidth, ranchHeight);
-    }
+    }*/
 
 
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        int currentTypeFence = GameUIPanel.getTypeFence(); // Accéder à TypeFence
+
         Position rancherPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getRancher().getPosition(), rancherImageIcon);
 //        Position wolfPanelPosition = RanchPositionToPanelPosition_Centered(ranch.getWolf().getPosition(), wolfImageIcon);
-
+        this.TypeFence = GameUIPanel.TypeFence;
         //make copys
         List<Fence> Fences = new ArrayList<>(ranch.getFences());
         List<Sheep> sheepFlock =  new ArrayList<>(ranch.getSheepFlock());
@@ -203,15 +232,24 @@ public class GamePanel extends JPanel{
         // Récupérer la position de la souris dans le panneau
         Point mousePoint = getMousePosition();
         if (mousePoint != null) {
-            // Convertir la position de la souris en position de ranch
-            Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
-
-            // Dessiner une indication visuelle autour de la position de la souris
-            int fenceWidth = Fence.WIDTH/2; // Largeur de la clôture
-            int fenceHeight = Fence.HEIGHT/4; // Hauteur de la clôture
-            int indicatorSize = Math.min(fenceWidth, fenceHeight); // Taille de l'indicateur (utilisez la plus petite dimension)
-            g.setColor(new Color(0, 255, 255, 100)); // Couleur de l'indication visuelle (rouge semi-transparent)
-            g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight); // Dessiner un rectangle autour de la position de la souris
+            if (currentTypeFence == 0) {
+                // Convertir la position de la souris en position de ranch
+                // Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
+                // Dessiner une indication visuelle autour de la position de la souris
+                // Partie horizontale
+                int fenceWidth = Fence.WIDTH/2; // Largeur de la clôture
+                int fenceHeight = Fence.HEIGHT/4; // Hauteur de la clôture
+                //int indicatorSize = Math.min(fenceWidth, fenceHeight); // Taille de l'indicateur (utilisez la plus petite dimension)
+                g.setColor(new Color(0, 255, 255, 100));
+                g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight);
+            } else if (currentTypeFence == 1) {
+                //Partie Verticale
+                // Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
+                int fenceWidth = Fence.HEIGHT/4;
+                int fenceHeight = Fence.WIDTH/2;
+                g.setColor(new Color(0, 255, 255, 100));
+                g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight);
+            }
         }
 
         //change to iterator

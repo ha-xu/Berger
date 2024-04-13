@@ -18,6 +18,8 @@ public class GameUIPanel extends JPanel {
     private JLabel label_sheep;
     private JLabel label_grass;
 
+    public static int TypeFence = 0;
+
     //threads
     private GameFrame frame;
     private final RedessineUI redessineUi = new RedessineUI(this);
@@ -28,6 +30,10 @@ public class GameUIPanel extends JPanel {
 
     public void stopRedessine(){
         redessineUi.Pause();
+    }
+
+    public static int getTypeFence() {
+        return TypeFence;
     }
 
     public GameUIPanel(GameFrame frame, Ranch r){
@@ -51,6 +57,15 @@ public class GameUIPanel extends JPanel {
         button_grass.setBounds(0, 50, 150, 15);
         sous_panel.add(button_grass);
 
+        //buy fence horizontale
+        JButton btnFenceH = new JButton("BUY FENCE HORIZONTALE");
+        btnFenceH.setBounds(0, 50, 150, 15);
+        sous_panel.add(btnFenceH);
+
+        //buy fence verticale
+        JButton btnFenceV = new JButton("BUY FENCE VERTICALE");
+        btnFenceV.setBounds(0, 50, 150, 15);
+        sous_panel.add(btnFenceV);
 
 
         label_coin = new JLabel("number of coins : "+ money);
@@ -87,6 +102,22 @@ public class GameUIPanel extends JPanel {
                 ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
 
+            }
+        });
+
+        //Si cliqué bouton buy fence Horizontale, on fix TypeFence qui est 0
+        btnFenceH.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TypeFence = 0;
+            }
+        });
+
+        //Si buy fence Verticale, il est 1
+        btnFenceV.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TypeFence = 1;
             }
         });
 

@@ -2,6 +2,7 @@ package model.GameObjects;
 
 import model.Character;
 import model.Position;
+import model.SoundPlayer;
 import model.Threads.WolfMove;
 
 public class Wolf extends Character {
@@ -61,6 +62,7 @@ public class Wolf extends Character {
         System.out.println("Wolf ate a sheep");
         sheep.stopMove();
         ranch.getSheepFlock().remove(sheep);
+        SoundPlayer.playEatSound();
     }
 
     //run away from rancher

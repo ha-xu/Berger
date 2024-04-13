@@ -1,9 +1,7 @@
 package model.GameObjects;
 
+import model.*;
 import model.Character;
-import model.Direction;
-import model.Position;
-import model.Probability;
 import model.Threads.SheepMove;
 
 import java.util.ArrayList;
@@ -109,6 +107,7 @@ public class Sheep extends Character {
             stayAwayFromRancher();
             isAway = false;
         }
+
         return isAway;
     }
 
@@ -132,7 +131,7 @@ public class Sheep extends Character {
         //vérifier dans sheepFlock si le tableau est vide ou pas pour produire des poils
 
         sheepActions();
-
+        playSoundRandomly(0.001);
 
 //        if (this.getPosition().getX() > ranch.WIDTH){
 //            super.StopMoveDirection(Direction.RIGHT);
@@ -199,6 +198,14 @@ public class Sheep extends Character {
     //stay away from rancher
     public void stayAwayFromRancher(){
         stayAway(ranch.getRancher());
+    }
+
+    public void playSoundRandomly(double probability)
+    {
+        if(Probability.isTrue(probability))
+        {
+            SoundPlayer.playSheepSound();
+        }
     }
 
     //stay away from wolf

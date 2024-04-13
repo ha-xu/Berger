@@ -2,6 +2,7 @@ package main;
 
 import input.InputManager;
 import model.GameObjects.Ranch;
+import model.SoundPlayer;
 import view.*;
 import view.Threads.Redessine;
 
@@ -43,6 +44,10 @@ public class Main {
         frame.addKeyListener(inputManager);
         frame.pack();
         frame.requestFocus();
+
+
+        //start background sound
+        SoundPlayer.playBackGroundSound();
     }
 
     public static void GameStop(boolean isWin, Ranch ranch) {
@@ -50,6 +55,15 @@ public class Main {
         frame.setLayout(new FlowLayout());
         frame.add(new GameFinishPanel(isWin, ranch));
         frame.pack();
+
+        //stop background sound
+        SoundPlayer.stopBackGroundSound();
+
+        if(isWin){
+            SoundPlayer.playWinSound();
+        }else{
+            SoundPlayer.playGameOverSound();
+        }
     }
 
     public static void main(String[] args) {

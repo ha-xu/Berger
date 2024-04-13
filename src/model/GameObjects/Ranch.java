@@ -17,12 +17,14 @@ public class Ranch {
     private final double GENERATE_WOLF_POSSIBILITY = 0.005;
     public static final int GRASS_PRICE = 10; //the price of grass
     public static final int SHEEP_PRICE = 100; //the price of sheep
+
+    public static final int FENCE_PRICE = 80; //the price of fence
     public static final int WOOL_MONEY = 30;
 
     public static final int INITIAL_MONEY = 500;
 
     public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
-
+    public static final int FENCE_LIFE = 2;
     public static final int WIN_DAYS = 30;
 
     public static final int WIN_SHEEP_COUNT = 10;
@@ -38,6 +40,9 @@ public class Ranch {
     ArrayList<Wool> wools = new ArrayList<>();
 
     ArrayList<Grass> grasses = new ArrayList<>();
+
+    ArrayList<Fence> fences = new ArrayList<>();
+
 
     RanchMove ranchMove = new RanchMove(this);
 
@@ -116,6 +121,11 @@ public class Ranch {
         return date;
     }
 
+    //get the fences
+    public ArrayList<Fence> getFences() {
+        return fences;
+    }
+
     public void dateRun(int updateInterval){
         datetimecount -= updateInterval;
         if(datetimecount <= 0){
@@ -125,6 +135,9 @@ public class Ranch {
             if(date % 2 == 0){
                 AddWolf(date / 2);
             }
+
+            //remove the fences that have been placed for more than 2 days
+            fences.removeIf(fence -> date - fence.getStartDate() > FENCE_LIFE);
         }
     }
 
@@ -135,6 +148,7 @@ public class Ranch {
             Sheep newSheep = new Sheep(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500)), this);
             sheepFlock.add(newSheep);
             newSheep.startMove();
+            SoundPlayer.playBuySound();
         }
         else{
             System.out.println("You don't have enough money or you have reached the maximum number of sheep");
@@ -146,6 +160,21 @@ public class Ranch {
         if (money >= GRASS_PRICE){
             money -= GRASS_PRICE;
             grasses.add(new Grass(new Position(Probability.randomInt(0,500), Probability.randomInt(0,500))));
+            SoundPlayer.playBuySound();
+
+        }
+        else{
+            System.out.println("You don't have enough money");
+        }
+    }
+
+    //buy fence
+    public void BuyFence(Position position, Fence.TypeFence type){
+        if (money >= FENCE_PRICE){
+            money -= FENCE_PRICE;
+            addFence(position, type);
+            SoundPlayer.playBuySound();
+
         }
         else{
             System.out.println("You don't have enough money");
@@ -209,5 +238,12 @@ public class Ranch {
             wolves.add(wolf);
             wolf.startMove();
         }
+    }
+
+    //ajouter la clôture (position est choisi par le curseur par
+    // la fonction définie dans GamePanel).
+    public void addFence(Position position, Fence.TypeFence type){
+        Fence newFence = new Fence(position, type, date);
+        fences.add(newFence);
     }
 }

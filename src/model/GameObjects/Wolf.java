@@ -5,6 +5,8 @@ import model.Position;
 import model.SoundPlayer;
 import model.Threads.WolfMove;
 
+import java.util.ArrayList;
+
 public class Wolf extends Character {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 70;
@@ -97,6 +99,17 @@ public class Wolf extends Character {
         }else{
             runAwayFromRancher();
         }
+
+        NoTouchFence();
+
+    }
+
+    //La clôture ne peut pas touché par le loup
+    public void NoTouchFence(){
+        ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
+        for (Fence fence : fences){
+                FenceUntouchable(fence);
+        }
     }
 
     @Override
@@ -104,4 +117,6 @@ public class Wolf extends Character {
         WolfActions();
         super.move();
     }
+
+
 }

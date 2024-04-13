@@ -79,6 +79,8 @@ public class Sheep extends Character {
                 randomMove();
             }
         }
+        NoTouchFence();
+
     }
 
     //Lors d'une rencontre d'un des loups, le mouton fuira. On évite que les moutons se superposent.
@@ -204,13 +206,14 @@ public class Sheep extends Character {
         stayAway(ranch.getRancher());
     }
 
-    public void playSoundRandomly(double probability)
-    {
-        if(Probability.isTrue(probability))
-        {
-            SoundPlayer.playSheepSound();
+    //Moutons ne peuvent pas toucher les clôtures en utilisant FenteUntouchable
+    public void NoTouchFence(){
+        ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
+        for (Fence fence : fences){
+            FenceUntouchable(fence);
         }
     }
+
 
     //stay away from wolf
 //    public void stayAwayFromWolf(){

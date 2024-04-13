@@ -6,6 +6,7 @@ import view.Threads.Redessine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +17,10 @@ public class GamePanel extends JPanel{
     private final ImageIcon sheepImageIcon;
     private final ImageIcon grassImageIcon;
     private final ImageIcon woolImageIcon;
+
+    private final ImageIcon fenceVIcon;
+    private final ImageIcon fenceHIcon;
+
 
     private final Ranch ranch;
 
@@ -62,6 +67,12 @@ public class GamePanel extends JPanel{
         grassImageIcon = new ImageIcon("src/images/grassImage.png");
         grassImageIcon.setImage(grassImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Grass.WIDTH), RanchLengthToPanelLength(Grass.HEIGHT), Image.SCALE_DEFAULT));
 
+        //set image fence (clôture) et sa taille
+        fenceHIcon = new ImageIcon("src/images/fenceH.png");
+        fenceHIcon.setImage(fenceHIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Fence.WIDTH), RanchLengthToPanelLength(Fence.HEIGHT), Image.SCALE_DEFAULT));
+
+        fenceVIcon = new ImageIcon("src/images/fenceV.png");
+        fenceVIcon.setImage(fenceVIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Fence.WIDTH), RanchLengthToPanelLength(Fence.HEIGHT), Image.SCALE_DEFAULT));
 
         //set background color
         float [] hsb = new float[3];
@@ -69,6 +80,24 @@ public class GamePanel extends JPanel{
         this.setBackground(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
 
 
+        //click mouse right event
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+                    System.out.println("right click");
+                    GameUIPanel.currentTypeFence = -1;
+                }
+
+                if(evt.getButton() == java.awt.event.MouseEvent.BUTTON1){
+                    System.out.println("left click");
+                    if(GameUIPanel.currentTypeFence != -1){
+                        Position fencePosition = PanelPositionToRanchPosition(new Position(evt.getX(), evt.getY()));
+                        ranch.BuyFence(fencePosition, GameUIPanel.currentTypeFence == 0 ? Fence.TypeFence.HORIZONTALE : Fence.TypeFence.VERTICALE);
+
+                    }
+                }
+            }
+        });
     }
 
     int RanchLengthToPanelLength(double length){
@@ -77,6 +106,10 @@ public class GamePanel extends JPanel{
 
     Position RanchPositionToPanelPosition(Position position){
         return new Position((int) (((double) position.getX()/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT), (int) ( ((double) position.getY()/(double)ranch.HEIGHT)*(double)GameFrame.HEIGHT));
+    }
+
+    Position PanelPositionToRanchPosition(Position position){
+        return new Position((int) (((double) position.getX()/(double)GameFrame.HEIGHT)*(double)ranch.WIDTH), (int) ( ((double) position.getY()/(double)GameFrame.HEIGHT)*(double)ranch.HEIGHT));
     }
 
     Position RanchPositionToPanelPosition_Centered(Position position,ImageIcon icon){
@@ -138,11 +171,44 @@ public class GamePanel extends JPanel{
                 g.drawImage(grassImageIcon.getImage(), grassPanelPosition.getX(), grassPanelPosition.getY(), this);
             }
         }
-//        //draw grass
-//        for (Grass grass : ranch.getGrasses()) {
-//            Position grassPanelPosition = RanchPositionToPanelPosition_Centered(grass.getPosition(), grassImageIcon);
-//            g.drawImage(grassImageIcon.getImage(), grassPanelPosition.getX(), grassPanelPosition.getY(), this);
-//        }
+
+        //draw fence
+        for (Fence fence : ranch.getFences()) {
+            if(fence != null){
+                Position fencePanelPosition = RanchPositionToPanelPosition_Centered(fence.getPosition(), fence.getType() == Fence.TypeFence.HORIZONTALE ? fenceHIcon : fenceVIcon);
+                g.drawImage(fence.getType() == Fence.TypeFence.HORIZONTALE ? fenceHIcon.getImage() : fenceVIcon.getImage(), fencePanelPosition.getX(), fencePanelPosition.getY(), this);
+            }
+
+        }
+
+
+
+        if(GameUIPanel.currentTypeFence != -1){
+            /** Dessiner la zone sélectionnée par le curseur*/
+            // Récupérer la position de la souris dans le panneau
+            Point mousePoint = getMousePosition();
+            if (mousePoint != null) {
+                if (GameUIPanel.currentTypeFence == 0) {
+                    // Convertir la position de la souris en position de ranch
+                    // Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
+                    // Dessiner une indication visuelle autour de la position de la souris
+                    // Partie horizontale
+                    int fenceWidth = Fence.WIDTH/2; // Largeur de la clôture
+                    int fenceHeight = Fence.HEIGHT/4; // Hauteur de la clôture
+                    //int indicatorSize = Math.min(fenceWidth, fenceHeight); // Taille de l'indicateur (utilisez la plus petite dimension)
+                    g.setColor(new Color(0, 255, 255, 100));
+                    g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight);
+                } else if (GameUIPanel.currentTypeFence == 1) {
+                    //Partie Verticale
+                    // Position ranchPosition = panelPositionToRanchPosition(new Position(mousePoint.x, mousePoint.y));
+                    int fenceWidth = Fence.HEIGHT/4;
+                    int fenceHeight = Fence.WIDTH/2;
+                    g.setColor(new Color(0, 255, 255, 100));
+                    g.fillRect(mousePoint.x - fenceWidth / 2, mousePoint.y - fenceHeight / 2, fenceWidth, fenceHeight);
+                }
+            }
+
+        }
 
     }
 }

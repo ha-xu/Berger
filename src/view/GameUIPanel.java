@@ -20,6 +20,8 @@ public class GameUIPanel extends JPanel {
     private JLabel label_sheep;
     private JLabel label_grass;
 
+    public static int currentTypeFence = -1; // 0: horizontale, 1: verticale
+
     //threads
     private GameFrame frame;
     private final RedessineUI redessineUi = new RedessineUI(this);
@@ -73,6 +75,39 @@ public class GameUIPanel extends JPanel {
         label_grass.setForeground(Color.WHITE);
         this.add(label_grass);
 
+
+        //buy fence horizontale
+        JButton btnFenceH = new JButton("BUY FENCE HORIZONTALE");
+        btnFenceH.setBounds(0, 50, 150, 15);
+        sous_panel.add(btnFenceH);
+
+        //buy fence verticale
+        JButton btnFenceV = new JButton("BUY FENCE VERTICALE");
+        btnFenceV.setBounds(0, 50, 150, 15);
+        sous_panel.add(btnFenceV);
+
+
+        //Si cliqué bouton buy fence Horizontale, on fix TypeFence qui est 0
+        btnFenceH.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentTypeFence = 0;
+                frame.requestFocus();
+
+            }
+        });
+
+        //Si buy fence Verticale, il est 1
+        btnFenceV.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentTypeFence = 1;
+                frame.requestFocus();
+
+            }
+        });
+
+
         button_sheep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,8 +116,6 @@ public class GameUIPanel extends JPanel {
 //                gamePanel.requestFocusInWindow();
                 ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
-
-                SoundPlayer.playBuySound();
             }
         });
 
@@ -93,10 +126,10 @@ public class GameUIPanel extends JPanel {
 //                gamePanel.requestFocusInWindow();
                 ranch.getRancher().StopAllMoveDirections();
                 frame.requestFocus();
-                SoundPlayer.playBuySound();
-
             }
         });
+
+
 
 
         setBackground(Color.BLUE);

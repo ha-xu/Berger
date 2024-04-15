@@ -19,30 +19,27 @@ public class Ranch {
     public static final int SHEEP_PRICE = 100; //the price of sheep
 
     public static final int FENCE_PRICE = 80; //the price of fence
-    public static final int WOOL_MONEY = 30;
+    public static final int WOOL_MONEY = 30;  //le prix de vente de la laine
 
-    public static final int INITIAL_MONEY = 500;
+    public static final int INITIAL_MONEY = 500; // Argent initial du joueur
 
-    public static final int DATE_TIME = 10000;//time interval of a day in milliseconds
-    public static final int FENCE_LIFE = 5;
-    public static final int WIN_DAYS = 30;
+    public static final int DATE_TIME = 10000; //time interval of a day in milliseconds
+    public static final int FENCE_LIFE = 5; // Durée de vie d'une clôture en jours
+    public static final int WIN_DAYS = 30; // Nombre de jours nécessaires pour gagner
 
-    public static final int WIN_SHEEP_COUNT = 10;
+    public static final int WIN_SHEEP_COUNT = 10; // Nombre de moutons nécessaires pour gagner
 
     private int money = INITIAL_MONEY; //the money of the rancher
     private int date = 1; //the date of the game
 
     private int wolfCount = 0;
     Rancher rancher;
+    // Listes des loups, moutons, clôtures, laines et herbes
     ArrayList<Wolf> wolves = new ArrayList<>();
     ArrayList<Sheep> sheepFlock = new ArrayList<>();
-
     ArrayList<Wool> wools = new ArrayList<>();
-
     ArrayList<Grass> grasses = new ArrayList<>();
-
     ArrayList<Fence> fences = new ArrayList<>();
-
 
     RanchMove ranchMove = new RanchMove(this);
 
@@ -54,6 +51,7 @@ public class Ranch {
         ranchMove.Pause();
     }
 
+    // Constructeur du ranch
     public Ranch() {
         rancher = new Rancher(new Position(50, 50), 5, this);
 //        wolves.add(new Wolf(new Position(200, 60),6, this));
@@ -105,18 +103,23 @@ public class Ranch {
         }
     }
 
+    // Dans move() si les conditions gagnant est vérifiées, alors appel GemeWin
+    // methode pour arrêter le jeu si le joueur a gagné
     private void GameWin(String winReason) {
         stopMove();
         Main.GameStop(true,this,winReason);
     }
 
+    // Méthode pour arrêter le jeu si loueur a perdu
     private void GameLose(String loseReason) {
         stopMove();
         Main.GameStop(false,this,loseReason);
     }
 
+    // Compteur pour la date
     private int datetimecount = DATE_TIME;
 
+    // Méthode pour obtenir la date du jeu
     public int getDate() {
         return date;
     }
@@ -126,6 +129,7 @@ public class Ranch {
         return fences;
     }
 
+    // Méthode pour faire avancer la date du jeu
     public void dateRun(int updateInterval){
         datetimecount -= updateInterval;
         if(datetimecount <= 0){
@@ -181,6 +185,7 @@ public class Ranch {
         }
     }
 
+    // Les méthodes pour obtenir les acteurs
     public Rancher getRancher() {
         return rancher;
     }
@@ -188,7 +193,6 @@ public class Ranch {
     public int getMoney() {
         return money;
     }
-
 
     public ArrayList<Wolf> getWolves() {
         return wolves;
@@ -210,9 +214,8 @@ public class Ranch {
         this.money += money;
     }
 
-
+    //generate random position outside ranch but within the frame
     private Position randomPositionOutsideRanch(int length){
-        //generate random position outside ranch but within the frame
         //random X
         int x = Probability.randomInt(-length, WIDTH + length);
         //random Y
@@ -231,6 +234,8 @@ public class Ranch {
         }
     }
 
+    // Ajoute un nombre spécifié de loups au ranch
+    // (ici on l'utilise dans DateRun où le nombre wolfCount = date/2)
     private void AddWolf(int wolfCount){
         SoundPlayer.playWolfSound();
         for (int i = 0; i < wolfCount; i++) {

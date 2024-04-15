@@ -8,15 +8,18 @@ import model.Threads.WolfMove;
 import java.util.ArrayList;
 
 public class Wolf extends Character {
+    //Largeur et hauteur d'image
     public static final int WIDTH = 70;
     public static final int HEIGHT = 70;
 
+    // La distance du mouton mangé par le loup
     public static final int EAT_SHEEP_RANGE = 10;
+    // Distance minimale du rancher pour déclencher la fuite du loup
     public static final int CLOSEST_DISTANCE_FROM_RANCHER = 200;
 
     private final Ranch ranch;
 
-    private boolean runningAway = false;
+    private boolean runningAway = false; // Booléen pour indiquer si le loup est en fuite
 
     private WolfMove wolfMove = new WolfMove(this);
 
@@ -28,17 +31,19 @@ public class Wolf extends Character {
         wolfMove.Pause();
     }
 
+    // Constructeur du loup avec une position et une référence au ranch
     public Wolf(Position position, Ranch ranch){
         super(position);
         this.ranch = ranch;
     }
 
+    // Constructeur du loup avec une position, une vitesse et une référence au ranch
     public Wolf(Position position, int speed, Ranch ranch){
         super(position, speed);
         this.ranch = ranch;
     }
 
-    //Nearest sheep
+    // Méthode pour trouver le mouton le plus proche du loup
     public Sheep nearestSheep(){
         Sheep nearestSheep = null;
         double minDistance = Double.MAX_VALUE;
@@ -84,6 +89,7 @@ public class Wolf extends Character {
 //        }
 //    }
 
+    // Actions du loup
     public void WolfActions(){
         if(runningAway){
             runAwayFromRancher();
@@ -99,12 +105,12 @@ public class Wolf extends Character {
         }else{
             runAwayFromRancher();
         }
-
+        // Les clôtures ne peuvent pas toucher par le loup
         NoTouchFence();
 
     }
 
-    //La clôture ne peut pas touché par le loup
+    // Méthode pour empêcher le loup de toucher les clôtures
     public void NoTouchFence(){
         ArrayList<Fence> fences = new ArrayList<>(ranch.getFences());
         for (Fence fence : fences){
@@ -112,6 +118,7 @@ public class Wolf extends Character {
         }
     }
 
+    // Méthode de déplacement du loup
     @Override
     public void move() {
         WolfActions();

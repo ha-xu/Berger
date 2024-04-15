@@ -10,15 +10,17 @@ import java.util.Objects;
 import static model.Probability.isTrue;
 
 public class Sheep extends Character {
-    private int NbEatenGrass = 0;
-    private double ProbaProduitPoil = 0.001;
-    private int PoilsProduit = 0;
+    private int NbEatenGrass = 0; // Nombre d'herbes mangées (sur 2, ragarder probaWool en bas)
+    private int PoilsProduit = 0; // Nombre de poils produits (sur 5, ragarder probaWool en bas)
+    private double ProbaProduitPoil = 0.001; // Probabilité de produire de la laine
+
+    //Largeur et hauteur d'image de mouton
     public static final int WIDTH = 70;
     public static final int HEIGHT = 70;
 
-    public static final int GRASS_EATING_DISTANCE = 40;
-    public static final int CLOSEST_DISTANCE_FROM_WOLF = 200;
-    public static final int CLOSEST_DISTANCE_FROM_SHEEP = 30;
+    public static final int GRASS_EATING_DISTANCE = 40; // Distance pour manger de l'herbe
+    public static final int CLOSEST_DISTANCE_FROM_WOLF = 200; // Distance pour fuir par rapport au loup
+    public static final int CLOSEST_DISTANCE_FROM_SHEEP = 30; // Distance minimale par rapport à d'autres moutons
 
     private final Ranch ranch;
 
@@ -41,7 +43,7 @@ public class Sheep extends Character {
         this.ranch = ranch;
     }
 
-    //Constructeur
+    //Constructeur avec vitesse
     public Sheep(Position position, int speed, Ranch ranch){
         super(position, speed);
         //this.isAlive = true;
@@ -134,7 +136,6 @@ public class Sheep extends Character {
 
         sheepActions();
 //        playSoundRandomly(0.001);
-
 //        if (this.getPosition().getX() > ranch.WIDTH){
 //            super.StopMoveDirection(Direction.RIGHT);
 //        }
@@ -152,6 +153,8 @@ public class Sheep extends Character {
         super.move();
     }
 
+    // Production de la laine
+    // si le système a pioché true alors on ajoute la laine de le ranch
     public void produirePoil(){
         boolean produitPoil = isTrue(ProbaProduitPoil);
         if(produitPoil){
@@ -163,7 +166,7 @@ public class Sheep extends Character {
         }
     }
 
-    //closestGrass width iterator
+    // Trouver l'herbe la plus proche
     public Grass closestGrass(){
         Grass closestGrass = null;
         double minDistance = Double.MAX_VALUE;
@@ -178,12 +181,13 @@ public class Sheep extends Character {
         return closestGrass;
     }
 
-
+    // Suivre l'herbe la plus proche
     public void followGrass(Grass grass) {
         if(grass != null) {
             follow(grass.getPosition());
         }
     }
+
     // Méthode de consommation de l'herbe par les moutons en cas de collision entre le sheep et le grass
     public void EatGrass(Grass grass){
         if(grass != null) {
@@ -192,7 +196,7 @@ public class Sheep extends Character {
         }
     }
 
-    //stay away from sheep
+    //stay away from sheep (Combiner stayAwayFromWolf dans stayAwayFromOthers qui est en haut maintenant).
 //    public void stayAwayFromSheep(){
 //        for (Sheep sheep : ranch.getSheepFlock()) {
 //            if (sheep != this){

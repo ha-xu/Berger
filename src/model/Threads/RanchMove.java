@@ -11,6 +11,7 @@ public class RanchMove extends Thread{
         this.ranch = ranch;
     }
 
+    // Méthode exécutée lors du démarrage du thread
     public void run(){
         while(isRunning){
             try{
@@ -18,7 +19,9 @@ public class RanchMove extends Thread{
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
+            // Déplacement du ranch à chaque itération de la boucle
             ranch.move();
+            // Exécution de la méthode dateRun du ranch pour mettre à jour la date du jeu
             ranch.dateRun(Redessine.REPAINT_INTERVAL);
         }
     }

@@ -11,6 +11,7 @@ public class WolfMove extends Thread{
         this.wolf = wolf;
     }
 
+    // Méthode exécutée lors du démarrage du thread
     public void run(){
         while(isRunning){
             try{
@@ -18,6 +19,7 @@ public class WolfMove extends Thread{
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
+            // Déplacement du loup à chaque itération de la boucle
             wolf.move();
         }
     }

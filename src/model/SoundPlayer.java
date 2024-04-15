@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class SoundPlayer {
     private static Clip backgroundClip;
+
+    // Joue un son une seule fois
     private static void playSound(String soundName) {
         try {
             Clip clip = AudioSystem.getClip();
@@ -15,6 +17,7 @@ public class SoundPlayer {
         }
     }
 
+    // Joue un son en boucle
     private static void playSound(String soundName, int loop) {
         try {
             Clip clip = AudioSystem.getClip();
@@ -37,6 +40,7 @@ public class SoundPlayer {
         }
     }
 
+    // Joue le son d'arrière-plan
     public static void playBackGroundSound() {
         try {
             backgroundClip = AudioSystem.getClip();
@@ -47,6 +51,7 @@ public class SoundPlayer {
         }
     }
 
+    // Arrête le son d'arrière-plan
     public static void stopBackGroundSound() {
         stopSound(backgroundClip);
     }

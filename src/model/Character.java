@@ -4,18 +4,22 @@ import model.GameObjects.Fence;
 
 public abstract class Character {
 
-
+    // distance de mouvement à chaque pas
     private int speed = 2;
     private final Position position;
 
+    // Indique si le personnage se déplace vers le haut, le bas, la gauche ou la droite
     private boolean isMovingUp = false;
     private boolean isMovingDown = false;
     private boolean isMovingLeft = false;
     private boolean isMovingRight = false;
 
+    // Constructeur avec position
     public Character(Position position) {
         this.position = position;
     }
+
+    // Constructeur avec position et vitesse
     public Character(Position position, int speed) {
         this.position = position;
         this.speed = speed;
@@ -28,7 +32,7 @@ public abstract class Character {
     }
 
 
-
+    // Méthode pour définir la direction de déplacement du personnage
     public void SetMoveDirection(Direction direction){
         switch (direction){
             case UP:
@@ -46,6 +50,7 @@ public abstract class Character {
         }
     }
 
+    // Méthode pour arrêter le déplacement dans une direction spécifique
     public void StopMoveDirection(Direction direction){
         switch (direction){
             case UP:
@@ -63,6 +68,7 @@ public abstract class Character {
         }
     }
 
+    // Méthode pour arrêter le déplacement dans toutes les directions
     public void StopAllMoveDirections(){
         isMovingUp = false;
         isMovingDown = false;
@@ -70,6 +76,8 @@ public abstract class Character {
         isMovingRight = false;
     }
 
+    // Méthode pour gérer le déplacement du personnage
+    // (plusieurs acteurs, par exemple Sheep hérite Character et l'utilise pour déplacer)
     public void move(){
         if(isMovingUp){
             position.setY((int)(position.getY() - speed));
@@ -111,10 +119,11 @@ public abstract class Character {
         }
     }
 
-    //Clôture untouchable par les autres character.
+    // Méthode pour rendre une clôture intouchable par le personnage
     public void FenceUntouchable(Fence fence){
         int disx = 0;
         int disy = 0;
+        // Déterminer la distance minimale en fonction du type de clôture
         if(fence.getType() == Fence.TypeFence.HORIZONTALE ) {
             disx = 100;
             disy = 80;
@@ -122,6 +131,7 @@ public abstract class Character {
             disx = 80;
             disy = 100;
         }
+        // Arrêter le déplacement si la distance entre le personnage et la clôture est inférieure à la distance minimale
         if(position.getX() < fence.getPosition().getX() && distance(fence.getPosition()) < disx){
             StopMoveDirection(Direction.LEFT);
             System.out.println(disx);
@@ -141,6 +151,7 @@ public abstract class Character {
         }
     }
 
+    // Méthode pour suivre un autre personnage
     public void follow(Character character){
         StopAllMoveDirections();
         if(position.getX() < character.getPosition().getX()){
@@ -155,6 +166,7 @@ public abstract class Character {
         }
     }
 
+    // Méthode pour suivre une position donnée
     public void follow(Position position){
         StopAllMoveDirections();
         if(this.position.getX() < position.getX()){
@@ -185,7 +197,7 @@ public abstract class Character {
         }
     }
 
-    //is out of ranch
+    //boolean : is out of ranch
     public boolean isOutOfRanch(int characterWidth,int characterHeight, int ranchWidth, int ranchHeight){
         return position.getX() < -characterWidth/2 || position.getX() > ranchHeight + characterWidth/2 || position.getY() < -characterHeight/2 || position.getY() > ranchHeight + characterHeight/2;
     }

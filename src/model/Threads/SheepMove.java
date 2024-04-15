@@ -10,6 +10,8 @@ public class SheepMove extends Thread{
     public SheepMove(Sheep sheep){
         this.sheep = sheep;
     }
+
+    // Méthode exécutée lors du démarrage du thread
     public void run(){
         while(isRunning){
             try{
@@ -17,6 +19,7 @@ public class SheepMove extends Thread{
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
+            // Déplacement du mouton à chaque itération de la boucle
             sheep.move();
         }
     }

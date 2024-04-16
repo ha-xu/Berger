@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Panneau de jeu qui affiche les éléments du ranch.
+ */
 public class GamePanel extends JPanel{
     private final ImageIcon rancherImageIcon;
     private final ImageIcon wolfImageIcon;
@@ -51,17 +54,13 @@ public class GamePanel extends JPanel{
         //set icon size
         rancherImageIcon.setImage(rancherImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
-
         sheepImageIcon = new ImageIcon("src/images/sheepImage.png");
-        //TODO: set sheep icon size
         sheepImageIcon.setImage(sheepImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Sheep.WIDTH), RanchLengthToPanelLength(Sheep.HEIGHT), Image.SCALE_DEFAULT));
 
         wolfImageIcon = new ImageIcon("src/images/wolfImage.png");
-        //TODO: wolf sheep icon size
         wolfImageIcon.setImage(wolfImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Rancher.WIDTH), RanchLengthToPanelLength(Rancher.HEIGHT), Image.SCALE_DEFAULT));
 
         woolImageIcon = new ImageIcon("src/images/woolImage.png");
-        //TODO: set wool icon size
         woolImageIcon.setImage(woolImageIcon.getImage().getScaledInstance(RanchLengthToPanelLength(Wool.WIDTH), RanchLengthToPanelLength(Wool.HEIGHT), Image.SCALE_DEFAULT));
 
         grassImageIcon = new ImageIcon("src/images/grassImage.png");
@@ -100,18 +99,22 @@ public class GamePanel extends JPanel{
         });
     }
 
+    // Conversion des dimensions du ranch aux dimensions du panneau
     int RanchLengthToPanelLength(double length){
         return (int) (( length/ranch.WIDTH)*GameFrame.HEIGHT);
     }
 
+    // Conversion de position du ranch à position du panneau
     Position RanchPositionToPanelPosition(Position position){
         return new Position((int) (((double) position.getX()/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT), (int) ( ((double) position.getY()/(double)ranch.HEIGHT)*(double)GameFrame.HEIGHT));
     }
 
+    // Conversion de position du panneau à position du ranch
     Position PanelPositionToRanchPosition(Position position){
         return new Position((int) (((double) position.getX()/(double)GameFrame.HEIGHT)*(double)ranch.WIDTH), (int) ( ((double) position.getY()/(double)GameFrame.HEIGHT)*(double)ranch.HEIGHT));
     }
 
+    // Positionnement centré sur le panneau en fonction des dimensions de l'icône
     Position RanchPositionToPanelPosition_Centered(Position position,ImageIcon icon){
         return new Position((int) (((double) position.getX()/(double)ranch.WIDTH)*(double)GameFrame.HEIGHT) - icon.getIconWidth()/2, (int) ( ((double) position.getY()/(double)ranch.HEIGHT)*(double)GameFrame.HEIGHT) - icon.getIconHeight()/2);
     }
@@ -182,9 +185,8 @@ public class GamePanel extends JPanel{
         }
 
 
-
+        /** Dessiner la zone sélectionnée par le curseur*/
         if(GameUIPanel.currentTypeFence != -1){
-            /** Dessiner la zone sélectionnée par le curseur*/
             // Récupérer la position de la souris dans le panneau
             Point mousePoint = getMousePosition();
             if (mousePoint != null) {

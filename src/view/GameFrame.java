@@ -5,12 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 
+/**
+ * Fenêtre principale du jeu.
+ */
 public class GameFrame extends JFrame{
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-
-
 
 
     public GameFrame(){

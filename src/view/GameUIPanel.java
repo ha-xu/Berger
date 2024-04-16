@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panneau d'interface utilisateur du jeu. (Magasin)
+ */
 public class GameUIPanel extends JPanel {
     private Ranch ranch;
     private int money = 0;
@@ -108,7 +111,7 @@ public class GameUIPanel extends JPanel {
             }
         });
 
-
+        // Ajout d'un écouteur pour le bouton d'achat de moutons
         button_sheep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,6 +123,7 @@ public class GameUIPanel extends JPanel {
             }
         });
 
+        // // Ajout d'un écouteur pour le bouton d'achat d'herbe
         button_grass.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -132,14 +136,16 @@ public class GameUIPanel extends JPanel {
 
 
 
-
+        // Définition de la couleur de fond du panneau
         setBackground(new Color(120,150,100));
     }
 
+    // Retourne l'objet Ranch associé à cette instance de GameUIPanel
     public Ranch getRanch() {
         return ranch;
     }
 
+    // Mise à jour des variables de l'interface utilisateur en fonction des données actuelles du ranch
     public void updateVariables(){
 //        if (money < ranch.getMoney()){
 //            money =  money+ (ranch.getMoney() - money)/10;
@@ -163,6 +169,8 @@ public class GameUIPanel extends JPanel {
         nbgrass = ranch.getGrasses().size();
     }
 
+    // Efface le panneau en le remplissant d'une couleur de fond
+    // Affiche les variables mises à jour dans l'interface utilisateur
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

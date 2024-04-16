@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Panneau de menu principal du jeu.
+ */
 public class GameMenuPanel extends JPanel {
 
     public GameMenuPanel() {
@@ -15,6 +18,7 @@ public class GameMenuPanel extends JPanel {
         JButton startButton = new JButton("Start");
         JButton quitButton = new JButton("Quit");
 
+        // Configuration du layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(GameFrame.WIDTH, GameFrame.HEIGHT));
 
@@ -33,7 +37,7 @@ public class GameMenuPanel extends JPanel {
         this.add(startButton);
         this.add(quitButton);
         this.add(Box.createVerticalGlue());
-
+        // Rendre le panneau visible
         this.setVisible(true);
         //add a listener to the button
         startButton.addActionListener(evt -> Main.GameStart());

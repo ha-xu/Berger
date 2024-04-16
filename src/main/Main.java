@@ -14,6 +14,7 @@ public class Main {
 
     private static final GameFrame frame = new GameFrame();
 
+    // Affiche le menu principal
     public static void ShowMenu() {
         frame.getContentPane().removeAll();
         frame.setLayout(new FlowLayout());
@@ -21,16 +22,17 @@ public class Main {
         frame.pack();
     }
 
+    // Démarre le jeu
     public static void GameStart() {
 
         frame.getContentPane().removeAll();
 
         Ranch ranch = new Ranch();
 
-        InputManager inputManager = new InputManager(ranch.getRancher());
+        InputManager inputManager = new InputManager(ranch.getRancher()); // Crée un gestionnaire d'entrée pour contrôler le rancher
 
-        GamePanel panel = new GamePanel(ranch);
-        GameUIPanel uiPanel = new GameUIPanel(frame, ranch);
+        GamePanel panel = new GamePanel(ranch); // Crée un panneau de jeu
+        GameUIPanel uiPanel = new GameUIPanel(frame, ranch); // Crée un panneau d'interface utilisateur (magasin)
 
         //start the ui thread to repaint the ui panel for animation
         panel.startRedessine(); //start the thread to repaint the frame
@@ -38,7 +40,7 @@ public class Main {
         //ranch start means game start
         ranch.start();
 
-        frame.setLayout(new FlowLayout()); // 1行2列
+        frame.setLayout(new FlowLayout()); // Configure la disposition du frame (1行2列)
         frame.add(panel);
         frame.add(uiPanel);
         frame.addKeyListener(inputManager);
@@ -50,6 +52,7 @@ public class Main {
         SoundPlayer.playBackGroundSound();
     }
 
+    // Arrête le jeu et affiche l'écran de fin avec le résultat
     public static void GameStop(boolean isWin, Ranch ranch,String message) {
         ranch.stop();
         frame.getContentPane().removeAll();
